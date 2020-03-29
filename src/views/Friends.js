@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import { SafeAreaView, FlatList, View, Text } from 'react-native';
 import * as Contacts from 'expo-contacts';
+import UserCard from '../components/UserCard';
 
 function Friends() {
-    let contacts = [];
+    const [loading, setLoading] = useState(true);
+    const [contacts, setContacts] = useState([]);
 
+    // Todo: Check and see if these numbers exist as users before rendering them
     useEffect(() => {
         (async () => {
             const { status } = await Contacts.requestPermissionsAsync();
@@ -15,7 +18,7 @@ function Friends() {
 
                 data.forEach(contact => {
                     if (!contact.phoneNumbers) return;
-                    console.log('Adding', contact.name);
+                    // console.log('Adding', contact.name);
 
                     let newContact = {
                         name: contact.name,
@@ -25,16 +28,30 @@ function Friends() {
                     };
 
                     // Push new contact to state
-                    contacts.push(newContact);
+                    setContacts(contacts => contacts.concat(newContact));
                 });
             }
+
+            setLoading(false);
         })();
     }, []);
 
+    if (loading) {
+        return (
+            <View>
+                <Text>Loading...</Text>
+            </View>
+        )
+    }
+
     return (
-        <View>
-            <Text>Friends</Text>
-        </View>
+        <SafeAreaView>
+            <FlatList
+                data={contacts}
+                renderItem={({ item }) => <UserCard userInfo={item}/>}
+                keyExtractor={(item, index) => index.toString()}
+            />
+        </SafeAreaView>
     )
 }
 
