@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { SafeAreaView, FlatList, View, Text } from 'react-native';
 import * as Contacts from 'expo-contacts';
 import UserCard from '../components/UserCard';
+import firebase from 'firebase/app';
+import 'firebase/database';
+import 'firebase/auth';
 
 function Friends() {
     const [loading, setLoading] = useState(true);
@@ -16,20 +19,49 @@ function Friends() {
                     fields: [Contacts.Fields.PhoneNumbers]
                 });
 
+                let allContacts = [];
+                // Looking through every contact literally took a minute and a half
                 data.forEach(contact => {
                     if (!contact.phoneNumbers) return;
-                    // console.log('Adding', contact.name);
 
-                    let newContact = {
+                    // Add contact to list of all contacts - will be parsed later
+                    allContacts.push({
                         name: contact.name,
                         phoneNumbers: contact.phoneNumbers.map(num => {
                             return num.digits;
                         })
-                    };
-
-                    // Push new contact to state
-                    setContacts(contacts => contacts.concat(newContact));
+                    });
                 });
+
+                allContacts.push({
+                    name: 'Test Contact',
+                    phoneNumbers: [
+                        '+16026514181'
+                    ]
+                });
+
+
+                // Check if contacts exists in the firebase database
+                let userContacts = [];
+                await (async () => {
+                    // Apparently foreach does not support await - the more ya know
+                    // For..in loop doesn't give key b/c no keys in this array - just indices
+                    for (const i in allContacts) {
+                        // Todo check each of the phone numbers
+                        await firebase.database().ref(allContacts[i].phoneNumbers[0]).once('value')
+                            .then(snapshot => {
+                                if (snapshot.val()) {
+                                    userContacts.push(allContacts[i]);
+                                    console.log('Found contact!', allContacts[i].name);
+                                }
+                            })
+                            .catch(error => {
+                                console.log('Something went wrong looking for phone #s:', error.message);
+                            });
+                    }
+                })();
+
+                setContacts(userContacts);
             }
 
             setLoading(false);

@@ -1,8 +1,12 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Friends from './src/views/Friends';
+import config from './apis/firebase';
+import firebase from 'firebase/app';
+
+firebase.initializeApp(config);
 
 const Stack = createStackNavigator();
 
