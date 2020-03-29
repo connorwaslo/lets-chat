@@ -27,6 +27,7 @@ function Friends() {
                     // Add contact to list of all contacts - will be parsed later
                     allContacts.push({
                         name: contact.name,
+                        status: 'ready',
                         phoneNumbers: contact.phoneNumbers.map(num => {
                             return num.digits;
                         })
@@ -35,8 +36,9 @@ function Friends() {
 
                 allContacts.push({
                     name: 'Test Contact',
+                    status: 'ready',
                     phoneNumbers: [
-                        '+16026514181'
+                        '+16025554181'
                     ]
                 });
 
