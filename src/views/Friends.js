@@ -21,7 +21,7 @@ function Friends() {
 
                 let allContacts = [];
                 // Looking through every contact literally took a minute and a half
-                data.forEach(contact => {
+                data.slice(0, 5).forEach(contact => {
                     if (!contact.phoneNumbers) return;
 
                     // Add contact to list of all contacts - will be parsed later
