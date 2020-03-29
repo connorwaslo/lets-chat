@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { FlatList, SafeAreaView, Text } from 'react-native';
+import ContactCard from '../components/ContactCard';
 import * as Contacts from 'expo-contacts';
-import firebase from 'firebase/app';
-import 'firebase/database';
-import 'firebase/auth';
-import { FlatList, SafeAreaView } from 'react-native';
-import UserCard from '../components/UserCard';
 
 function InviteContacts() {
     const [loading, setLoading] = useState(true);
@@ -21,7 +18,7 @@ function InviteContacts() {
 
                 let allContacts = [];
                 // Looking through every contact literally took a minute and a half
-                data.slice(0, 5).forEach(contact => {
+                data.forEach(contact => {
                     if (!contact.phoneNumbers) return;
 
                     // Add contact to list of all contacts - will be parsed later
@@ -41,11 +38,19 @@ function InviteContacts() {
         })();
     }, []);
 
+    if (loading) {
+        return (
+            <SafeAreaView>
+                <Text>Loading...</Text>
+            </SafeAreaView>
+        )
+    }
+
     return (
         <SafeAreaView>
             <FlatList
                 data={contacts}
-                renderItem={({ item }) => <UserCard userInfo={item}/>}
+                renderItem={({ item }) => <ContactCard userInfo={item}/>}
                 keyExtractor={(item, index) => index.toString()}
             />
         </SafeAreaView>

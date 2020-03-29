@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, FlatList, View, Text } from 'react-native';
-import UserCard from '../components/UserCard';
+import FriendCard from '../components/FriendCard';
 
 function Friends() {
     const [loading, setLoading] = useState(false);
@@ -24,7 +24,7 @@ function Friends() {
         <SafeAreaView>
             <FlatList
                 data={friends}
-                renderItem={({ item }) => <UserCard userInfo={item}/>}
+                renderItem={({ item }) => <FriendCard userInfo={item}/>}
                 keyExtractor={(item, index) => index.toString()}
             />
         </SafeAreaView>

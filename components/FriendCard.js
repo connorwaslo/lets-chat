@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Linking, View, Text } from 'react-native';
 
-function UserCard({ userInfo }) {
+function FriendCard({ userInfo }) {
     const { name, status } = userInfo;
     const phone = userInfo.phoneNumbers[0].replace('+', '');  // Should replace +1 country code with 1
 
@@ -14,4 +14,4 @@ function UserCard({ userInfo }) {
     )
 }
 
-export default UserCard;
+export default FriendCard;
