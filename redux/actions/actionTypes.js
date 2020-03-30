@@ -1,2 +1,5 @@
+export const SET_APP_LOADING = 'SET_APP_LOADING';
+
 export const SET_NAME = 'SET_NAME';
 export const SET_FRIEND_REQUESTS = 'SET_FRIEND_REQUESTS';
+export const SET_CONTACTS = 'SET_CONTACTS';
