@@ -22,7 +22,6 @@ function ContactCard({ userInfo }) {
     async function _handleInviteFriend() {
         // Check if already sent request
         if (!friendRequests.includes(phone)) {
-            console.log('Friend Requests:', friendRequests);
             await _requestFriend();
             dispatch(addFriendRequest(phone));
         }

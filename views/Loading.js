@@ -52,7 +52,6 @@ function Loading({ navigation }) {
     async function _loadUserData() {
         // Todo: Check if the user is logged in first
         // We'll just use placeholder data for now
-        console.log('Loaded splash screen...');
         await _getFirebase();
         await _getContacts();
 

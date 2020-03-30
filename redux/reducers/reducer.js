@@ -34,9 +34,6 @@ export function userReducer(state = initUserState, action) {
                 contacts: action.contacts
             };
         case ADD_FRIEND_REQUEST:
-            console.log('Friend Requests:', state.friendRequests);
-            console.log('Adding:', action.phone);
-
             let newReqs = state.friendRequests;
             newReqs.push(action.phone);
 
