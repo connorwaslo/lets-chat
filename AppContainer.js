@@ -4,6 +4,7 @@ import InviteContacts from './views/InviteContacts';
 import Friends from './views/Friends';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 
@@ -12,7 +13,8 @@ function AppContainer() {
         loading: state.loading
     }));
 
-    const Stack = createStackNavigator();
+    // const Stack = createStackNavigator();
+    const Drawer = createDrawerNavigator();
 
     if (loading) {
         return <Loading/>
@@ -20,10 +22,10 @@ function AppContainer() {
 
     return (
         <NavigationContainer style={styles.container}>
-            <Stack.Navigator>
-                <Stack.Screen name='Invite Friends' component={InviteContacts}/>
-                <Stack.Screen name='Friends' component={Friends}/>
-            </Stack.Navigator>
+            <Drawer.Navigator>
+                <Drawer.Screen name='Invite Friends' component={InviteContacts}/>
+                <Drawer.Screen name='Friends' component={Friends}/>
+            </Drawer.Navigator>
         </NavigationContainer>
     )
 }
