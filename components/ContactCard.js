@@ -3,15 +3,15 @@ import { TouchableOpacity, StyleSheet, View, Text } from 'react-native';
 import firebase from 'firebase/app';
 import 'firebase/database';
 import { useDispatch, useSelector } from 'react-redux';
-import { addFriendRequest } from '../redux/actions/actions';
+import { addoutgoingRequest } from '../redux/actions/actions';
 
 function ContactCard({ userInfo }) {
     const { name } = userInfo;
     const phone = userInfo.phoneNumbers[0]; // Todo: Parse this
 
     const dispatch = useDispatch();
-    const { friendRequests } = useSelector(state => ({
-        friendRequests: state.friendRequests
+    const { outgoingRequests } = useSelector(state => ({
+        outgoingRequests: state.outgoingRequests
     }));
 
     /*
@@ -21,9 +21,9 @@ function ContactCard({ userInfo }) {
      */
     async function _handleInviteFriend() {
         // Check if already sent request
-        if (!friendRequests.includes(phone)) {
+        if (!outgoingRequests.includes(phone)) {
             await _requestFriend();
-            dispatch(addFriendRequest(phone));
+            dispatch(addoutgoingRequest(phone));
         }
     }
 
@@ -31,9 +31,9 @@ function ContactCard({ userInfo }) {
      * To be called once firebase already checked for duplicates
      */
     function _requestFriend() {
-        firebase.database().ref('+16025554181/friendRequests')
+        firebase.database().ref('+16025554181/outgoingRequests')
             .set([
-                ...friendRequests,
+                ...outgoingRequests,
                 phone
             ])
             .catch(error => {

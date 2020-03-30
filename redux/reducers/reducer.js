@@ -1,13 +1,13 @@
 import {
     SET_NAME,
     SET_FRIEND_REQUESTS,
-    SET_CONTACTS, SET_APP_LOADING, ADD_FRIEND_REQUEST
+    SET_CONTACTS, SET_APP_LOADING, ADD_OUTGOING_REQUEST
 } from '../actions/actionTypes';
 
 const initUserState = {
     loading: true,
     name: '',
-    friendRequests: [],
+    outgoingRequests: [],
     contacts: []
 };
 
@@ -26,20 +26,20 @@ export function userReducer(state = initUserState, action) {
         case SET_FRIEND_REQUESTS:
             return {
                 ...state,
-                friendRequests: action.requests
+                outgoingRequests: action.requests
             };
         case SET_CONTACTS:
             return {
                 ...state,
                 contacts: action.contacts
             };
-        case ADD_FRIEND_REQUEST:
-            let newReqs = state.friendRequests;
+        case ADD_OUTGOING_REQUEST:
+            let newReqs = state.outgoingRequests;
             newReqs.push(action.phone);
 
             return {
                 ...state,
-                friendRequests: newReqs
+                outgoingRequests: newReqs
             };
         default:
             return state;
