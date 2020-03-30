@@ -1,7 +1,7 @@
 import {
     SET_NAME,
     SET_FRIEND_REQUESTS,
-    SET_CONTACTS, SET_APP_LOADING, ADD_OUTGOING_REQUEST
+    SET_CONTACTS, SET_APP_LOADING, ADD_OUTGOING_REQUEST, SET_OUTGOING_REQUESTS, SET_INCOMING_REQUESTS
 } from '../actions/actionTypes';
 
 const initUserState = {
@@ -23,10 +23,15 @@ export function userReducer(state = initUserState, action) {
                 ...state,
                 name: action.name
             };
-        case SET_FRIEND_REQUESTS:
+        case SET_OUTGOING_REQUESTS:
             return {
                 ...state,
                 outgoingRequests: action.requests
+            };
+        case SET_INCOMING_REQUESTS:
+            return {
+                ...state,
+                incomingRequests: action.requests
             };
         case SET_CONTACTS:
             return {

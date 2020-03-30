@@ -3,7 +3,7 @@ import { TouchableOpacity, StyleSheet, View, Text } from 'react-native';
 import firebase from 'firebase/app';
 import 'firebase/database';
 import { useDispatch, useSelector } from 'react-redux';
-import { addoutgoingRequest } from '../redux/actions/actions';
+import { addOutgoingRequest } from '../redux/actions/actions';
 
 function ContactCard({ userInfo }) {
     const { name } = userInfo;
@@ -23,7 +23,7 @@ function ContactCard({ userInfo }) {
         // Check if already sent request
         if (!outgoingRequests.includes(phone)) {
             await _requestFriend();
-            dispatch(addoutgoingRequest(phone));
+            dispatch(addOutgoingRequest(phone));
         }
     }
 

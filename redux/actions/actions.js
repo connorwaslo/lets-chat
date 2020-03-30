@@ -1,7 +1,9 @@
 import {
+    SET_APP_LOADING,
     SET_NAME,
+    SET_CONTACTS,
     SET_OUTGOING_REQUESTS,
-    SET_CONTACTS, SET_APP_LOADING, ADD_OUTGOING_REQUEST
+    ADD_OUTGOING_REQUEST, SET_INCOMING_REQUESTS
 } from './actionTypes';
 
 export const setAppLoading = loading => ({
@@ -19,12 +21,17 @@ export const setOutgoingRequests = requests => ({
     requests
 });
 
+export const setIncomingRequests = requests => ({
+    type: SET_INCOMING_REQUESTS,
+    requests
+});
+
 export const setContacts = contacts => ({
     type: SET_CONTACTS,
     contacts
 });
 
-export const addoutgoingRequest = phone => ({
+export const addOutgoingRequest = phone => ({
     type: ADD_OUTGOING_REQUEST,
     phone
 });

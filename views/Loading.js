@@ -1,7 +1,13 @@
 import React from 'react';
 import { View, Image, Text } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { setAppLoading, setContacts, setOutgoingRequests, setName } from '../redux/actions/actions';
+import {
+    setAppLoading,
+    setContacts,
+    setOutgoingRequests,
+    setName,
+    setIncomingRequests
+} from '../redux/actions/actions';
 import firebase from 'firebase/app';
 import 'firebase/database';
 import * as Contacts from 'expo-contacts';
@@ -10,7 +16,7 @@ function Loading({ navigation }) {
     const dispatch = useDispatch();
 
     async function _getFirebase() {
-        firebase.database().ref('+16025554181/').once('value')
+        await firebase.database().ref('+16025554181/').once('value')
             .then(snapshot => {
                 let name = (snapshot.val() && snapshot.val().name) || 'No Name';
                 let outgoingRequests = (snapshot.val() && snapshot.val().outgoingRequests) || [];
@@ -21,6 +27,11 @@ function Loading({ navigation }) {
             .catch(error => {
                 console.log('Could not load user data:', error.message);
             });
+
+        await firebase.database().ref('+16025554181/incomingRequests').on('value', snapshot => {
+            console.log('Incoming:', snapshot.val());
+            dispatch(setIncomingRequests(snapshot.val()));
+        })
     }
 
     async function _getContacts() {
