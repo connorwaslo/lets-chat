@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Image, Text } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
     setAppLoading,
     setContacts,
@@ -14,6 +14,7 @@ import * as Contacts from 'expo-contacts';
 
 function Loading({ navigation }) {
     const dispatch = useDispatch();
+    let contacts = [];
 
     async function _getFirebase() {
         await firebase.database().ref('+16025554181/').once('value')
@@ -29,7 +30,7 @@ function Loading({ navigation }) {
             });
 
         await firebase.database().ref('+16025554181/incomingRequests').on('value', snapshot => {
-            console.log('Incoming:', snapshot.val());
+            console.log('Updating Incoming Requests', snapshot.val());
             dispatch(setIncomingRequests(snapshot.val()));
         })
     }
@@ -43,7 +44,7 @@ function Loading({ navigation }) {
 
             let allContacts = [];
             // Looking through every contact literally took a minute and a half
-            data.forEach(contact => {
+            data.slice(0, 5).forEach(contact => {
                 if (!contact.phoneNumbers) return;
 
                 // Add contact to list of all contacts - will be parsed later
@@ -57,14 +58,15 @@ function Loading({ navigation }) {
             });
 
             dispatch(setContacts(allContacts));
+            contacts = allContacts; // This is to use as cross-reference for firebase
         }
     }
 
     async function _loadUserData() {
         // Todo: Check if the user is logged in first
         // We'll just use placeholder data for now
-        await _getFirebase();
         await _getContacts();
+        await _getFirebase();
 
         dispatch(setAppLoading(false));
     }
