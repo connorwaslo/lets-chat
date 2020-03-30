@@ -25,10 +25,6 @@ function ContactCard({ userInfo }) {
                         pendingReqs.push(snapshot.val()[index]);
                     }
 
-                    // Todo: store this in redux so we're not constantly doing firebase reads
-
-                    console.log('Pending friend requests:', pendingReqs);
-
                     if (!pendingReqs.includes(phone)) {
                         _requestFriend(pendingReqs);
                     }

@@ -17,7 +17,7 @@ export function userReducer(state = initUserState, action) {
             return {
                 ...state,
                 loading: action.loading
-            }
+            };
         case SET_NAME:
             return {
                 ...state,

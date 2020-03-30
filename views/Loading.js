@@ -15,9 +15,6 @@ function Loading({ navigation }) {
                 let name = (snapshot.val() && snapshot.val().name) || 'No Name';
                 let friendRequests = (snapshot.val() && snapshot.val().friendRequests) || [];
 
-                console.log('Name:', name);
-                console.log('Friend Requests:', friendRequests);
-
                 dispatch(setName(name));
                 dispatch(setFriendRequests(friendRequests));
             })
