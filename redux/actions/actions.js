@@ -3,7 +3,7 @@ import {
     SET_NAME,
     SET_CONTACTS,
     SET_OUTGOING_REQUESTS,
-    ADD_OUTGOING_REQUEST, SET_INCOMING_REQUESTS
+    ADD_OUTGOING_REQUEST, SET_INCOMING_REQUESTS, ADD_FRIEND, DENY_FRIEND
 } from './actionTypes';
 
 export const setAppLoading = loading => ({
@@ -34,4 +34,14 @@ export const setContacts = contacts => ({
 export const addOutgoingRequest = phone => ({
     type: ADD_OUTGOING_REQUEST,
     phone
+});
+
+export const addFriend = friend => ({
+    type: ADD_FRIEND,
+    friend
+});
+
+export const denyFriend = friend => ({
+    type: DENY_FRIEND,
+    friend
 });

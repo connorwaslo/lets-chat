@@ -1,13 +1,21 @@
 import {
     SET_NAME,
     SET_FRIEND_REQUESTS,
-    SET_CONTACTS, SET_APP_LOADING, ADD_OUTGOING_REQUEST, SET_OUTGOING_REQUESTS, SET_INCOMING_REQUESTS
+    SET_CONTACTS,
+    SET_APP_LOADING,
+    ADD_OUTGOING_REQUEST,
+    SET_OUTGOING_REQUESTS,
+    SET_INCOMING_REQUESTS,
+    ADD_FRIEND,
+    DENY_FRIEND
 } from '../actions/actionTypes';
 
 const initUserState = {
     loading: true,
     name: '',
+    friends: [],
     outgoingRequests: [],
+    incomingRequests: [],
     contacts: []
 };
 
@@ -45,6 +53,30 @@ export function userReducer(state = initUserState, action) {
             return {
                 ...state,
                 outgoingRequests: newReqs
+            };
+        case ADD_FRIEND:
+            let newFriends = state.friends;
+            newFriends.push(action.friend);
+
+            let newIncReqs = state.incomingRequests;
+            // Todo: Change this filter depending on what action.friend is
+            // Right now this compares phone numbers, but may have to use uid later
+            newIncReqs = newIncReqs.filter(req => req !== action.friend);
+
+            return {
+                ...state,
+                incomingRequests: newIncReqs,
+                friends: newFriends
+            };
+        case DENY_FRIEND:
+            let incReqs = state.incomingRequests;
+            // Todo: Change this filter depending on what action.friend is
+            // Right now this compares phone numbers, but may have to use uid later
+            incReqs = incReqs.filter(req => req !== action.friend);
+
+            return {
+                ...state,
+                incomingRequests: incReqs
             };
         default:
             return state;
