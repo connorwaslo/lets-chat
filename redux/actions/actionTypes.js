@@ -1,0 +1,2 @@
+export const SET_NAME = 'SET_NAME';
+export const SET_FRIEND_REQUESTS = 'SET_FRIEND_REQUESTS';
