@@ -2,46 +2,39 @@ import React from 'react';
 import { TouchableOpacity, StyleSheet, View, Text } from 'react-native';
 import firebase from 'firebase/app';
 import 'firebase/database';
+import { useDispatch, useSelector } from 'react-redux';
+import { addFriendRequest } from '../redux/actions/actions';
 
 function ContactCard({ userInfo }) {
     const { name } = userInfo;
     const phone = userInfo.phoneNumbers[0]; // Todo: Parse this
+
+    const dispatch = useDispatch();
+    const { friendRequests } = useSelector(state => ({
+        friendRequests: state.friendRequests
+    }));
 
     /*
      * This function is responsible for:
      * - Adding contact to database if they don't exist already
      * - Prepping a "share" text message to individuals who don't have accounts (if user accepts)
      */
-    function _handleInviteFriend(reqPhone) {
+    async function _handleInviteFriend() {
         // Check if already sent request
-        // Todo: Phone number replaced by current user phone number
-        firebase.database().ref('+16025554181/friendRequests/').once('value')
-            .then(snapshot => {
-                if (snapshot.val()) {
-                    // console.log('No friend request sent yet');
-                    let pendingReqs = [];
-                    for (const index in snapshot.val()) {
-                        console.log(snapshot.val()[index]);
-                        pendingReqs.push(snapshot.val()[index]);
-                    }
-
-                    if (!pendingReqs.includes(phone)) {
-                        _requestFriend(pendingReqs);
-                    }
-                }
-            })
-            .catch(error => {
-                console.log('Something went wrong checking if friend request already exists:', error.message);
-            });
+        if (!friendRequests.includes(phone)) {
+            console.log('Friend Requests:', friendRequests);
+            await _requestFriend();
+            dispatch(addFriendRequest(phone));
+        }
     }
 
     /*
      * To be called once firebase already checked for duplicates
      */
-    function _requestFriend(pendingReqs) {
+    function _requestFriend() {
         firebase.database().ref('+16025554181/friendRequests')
             .set([
-                ...pendingReqs,
+                ...friendRequests,
                 phone
             ])
             .catch(error => {
@@ -55,7 +48,7 @@ function ContactCard({ userInfo }) {
                 <Text style={styles.contact}>{name}{'\n'}{phone}</Text>
             </View>
             <View style={styles.right}>
-                <TouchableOpacity onPress={() => _handleInviteFriend()}>
+                <TouchableOpacity onPress={_handleInviteFriend}>
                     <View style={styles.addButton}>
                         <Text>+</Text>
                     </View>

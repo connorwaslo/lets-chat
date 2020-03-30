@@ -1,7 +1,7 @@
 import {
     SET_NAME,
     SET_FRIEND_REQUESTS,
-    SET_CONTACTS, SET_APP_LOADING
+    SET_CONTACTS, SET_APP_LOADING, ADD_FRIEND_REQUEST
 } from '../actions/actionTypes';
 
 const initUserState = {
@@ -32,6 +32,17 @@ export function userReducer(state = initUserState, action) {
             return {
                 ...state,
                 contacts: action.contacts
+            };
+        case ADD_FRIEND_REQUEST:
+            console.log('Friend Requests:', state.friendRequests);
+            console.log('Adding:', action.phone);
+
+            let newReqs = state.friendRequests;
+            newReqs.push(action.phone);
+
+            return {
+                ...state,
+                friendRequests: newReqs
             };
         default:
             return state;

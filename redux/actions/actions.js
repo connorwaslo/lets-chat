@@ -1,7 +1,7 @@
 import {
     SET_NAME,
     SET_FRIEND_REQUESTS,
-    SET_CONTACTS, SET_APP_LOADING
+    SET_CONTACTS, SET_APP_LOADING, ADD_FRIEND_REQUEST
 } from './actionTypes';
 
 export const setAppLoading = loading => ({
@@ -22,4 +22,9 @@ export const setFriendRequests = requests => ({
 export const setContacts = contacts => ({
     type: SET_CONTACTS,
     contacts
+});
+
+export const addFriendRequest = phone => ({
+    type: ADD_FRIEND_REQUEST,
+    phone
 });
