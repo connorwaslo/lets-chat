@@ -24,7 +24,6 @@ function FriendRequests({ navigation }) {
             // Check if this contact is any of the requests
             contact.phoneNumbers.forEach(num => {
                 if (numbers.includes(num)) {
-                    console.log('Found:', num);
                     curRequests.push({
                         name: contact.name,
                         status: contact.status,

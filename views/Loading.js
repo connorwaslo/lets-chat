@@ -30,7 +30,6 @@ function Loading({ navigation }) {
             });
 
         await firebase.database().ref('+16025554181/incomingRequests').on('value', snapshot => {
-            console.log('Updating Incoming Requests', snapshot.val());
             dispatch(setIncomingRequests(snapshot.val()));
         })
     }
@@ -44,7 +43,7 @@ function Loading({ navigation }) {
 
             let allContacts = [];
             // Looking through every contact literally took a minute and a half
-            data.slice(0, 5).forEach(contact => {
+            data.forEach(contact => {
                 if (!contact.phoneNumbers) return;
 
                 // Add contact to list of all contacts - will be parsed later
