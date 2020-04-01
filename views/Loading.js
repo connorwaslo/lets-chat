@@ -24,6 +24,7 @@ function Loading({ navigation }) {
                 let friends = (snapshot.val() && snapshot.val().friends) || [];
 
                 // Convert friends from phone numbers to full contacts
+                // This only adds friends that can be found in your contacts
                 let friendContacts = [];
                 contacts.forEach(contact => {
                     contact.phoneNumbers.forEach(num => {
