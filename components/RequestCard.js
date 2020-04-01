@@ -3,7 +3,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import firebase from 'firebase/app';
 import 'firebase/database';
 import { useDispatch, useSelector } from 'react-redux';
-import { addFriend, setIncomingRequests } from '../redux/actions/actions';
+import { addFriend, denyFriend, setIncomingRequests } from '../redux/actions/actions';
 
 function RequestCard({ item }) {
     const { name, phone } = item;
@@ -29,7 +29,6 @@ function RequestCard({ item }) {
 
         // Remove from incomingRequests in firebase and add to friends
         // Todo: Change hardcoded phone number to be current user
-        // Todo: Make sure not already a friend
         firebase.database().ref('+16025554181/incomingRequests').set(newRequests)
             .then(() => {
                 // If successfully saved new incomingRequests in firebase then add to friends
@@ -43,7 +42,16 @@ function RequestCard({ item }) {
     }
 
     function handleDeny() {
-        console.log('Lol that guys sucks');
+        let newRequests = incomingRequests;
+        newRequests = newRequests.filter(item => item !== phone);
+
+        dispatch(denyFriend(phone));
+
+        // Remove that request from firebase
+        firebase.database().ref('+16025554181/incomingRequests').set(newRequests)
+            .catch(error => {
+                console.log('Could not set incomingRequests on friend accept', error.message);
+            });
     }
 
     return (
