@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import DrawerHeader from '../components/DrawerHeader';
 import { useSelector } from 'react-redux';
-import { TouchableOpacity, FlatList, View, Text } from 'react-native';
+import { FlatList, View, Text } from 'react-native';
 import RequestCard from '../components/RequestCard';
 
 // Incoming requests
@@ -11,6 +11,22 @@ function FriendRequests({ navigation }) {
         incomingRequests: state.incomingRequests,
         contacts: state.contacts
     }));
+
+    if (requests.length > 0 && !incomingRequests) {
+        setRequests([]);
+    }
+
+    if (incomingRequests == null) {
+        return (
+            <DrawerHeader navigation={navigation}>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={{ textAlign: 'center' }}>
+                        No requests right now!
+                    </Text>
+                </View>
+            </DrawerHeader>
+        )
+    }
 
     if (requests.length !== incomingRequests.length) {
         convertRequests();

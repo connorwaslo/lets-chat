@@ -7,7 +7,7 @@ import {
     SET_OUTGOING_REQUESTS,
     SET_INCOMING_REQUESTS,
     ADD_FRIEND,
-    DENY_FRIEND
+    DENY_FRIEND, SET_FRIENDS
 } from '../actions/actionTypes';
 
 const initUserState = {
@@ -46,6 +46,11 @@ export function userReducer(state = initUserState, action) {
                 ...state,
                 contacts: action.contacts
             };
+        case SET_FRIENDS:
+            return {
+                ...state,
+                friends: action.friends
+            };
         case ADD_OUTGOING_REQUEST:
             let newReqs = state.outgoingRequests;
             newReqs.push(action.phone);
@@ -56,12 +61,17 @@ export function userReducer(state = initUserState, action) {
             };
         case ADD_FRIEND:
             let newFriends = state.friends;
+            console.log('Init friends:', newFriends);
             newFriends.push(action.friend);
+            console.log('newFriends:', newFriends);
 
             let newIncReqs = state.incomingRequests;
             // Todo: Change this filter depending on what action.friend is
             // Right now this compares phone numbers, but may have to use uid later
             newIncReqs = newIncReqs.filter(req => req !== action.friend);
+            if (newIncReqs === null) {
+                newIncReqs = [];
+            }
 
             return {
                 ...state,

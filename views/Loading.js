@@ -6,7 +6,7 @@ import {
     setContacts,
     setOutgoingRequests,
     setName,
-    setIncomingRequests
+    setIncomingRequests, setFriends
 } from '../redux/actions/actions';
 import firebase from 'firebase/app';
 import 'firebase/database';
@@ -21,9 +21,11 @@ function Loading({ navigation }) {
             .then(snapshot => {
                 let name = (snapshot.val() && snapshot.val().name) || 'No Name';
                 let outgoingRequests = (snapshot.val() && snapshot.val().outgoingRequests) || [];
+                let friends = (snapshot.val() && snapshot.val().friends) || [];
 
                 dispatch(setName(name));
                 dispatch(setOutgoingRequests(outgoingRequests));
+                dispatch(setFriends(friends));
             })
             .catch(error => {
                 console.log('Could not load user data:', error.message);
@@ -31,7 +33,7 @@ function Loading({ navigation }) {
 
         await firebase.database().ref('+16025554181/incomingRequests').on('value', snapshot => {
             dispatch(setIncomingRequests(snapshot.val()));
-        })
+        });
     }
 
     async function _getContacts() {
