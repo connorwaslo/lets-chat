@@ -60,6 +60,7 @@ export function userReducer(state = initUserState, action) {
                 outgoingRequests: newReqs
             };
         case ADD_FRIEND:
+            // Todo: include full contact
             let newFriends = state.friends;
             console.log('Init friends:', newFriends);
             newFriends.push(action.friend);

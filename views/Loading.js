@@ -23,9 +23,23 @@ function Loading({ navigation }) {
                 let outgoingRequests = (snapshot.val() && snapshot.val().outgoingRequests) || [];
                 let friends = (snapshot.val() && snapshot.val().friends) || [];
 
+                // Convert friends from phone numbers to full contacts
+                let friendContacts = [];
+                contacts.forEach(contact => {
+                    contact.phoneNumbers.forEach(num => {
+                        if (friends.includes(num)) {
+                            friendContacts.push({
+                                name: contact.name,
+                                status: contact.status,
+                                phone: num
+                            });
+                        }
+                    })
+                });
+
                 dispatch(setName(name));
                 dispatch(setOutgoingRequests(outgoingRequests));
-                dispatch(setFriends(friends));
+                dispatch(setFriends(friendContacts));
             })
             .catch(error => {
                 console.log('Could not load user data:', error.message);

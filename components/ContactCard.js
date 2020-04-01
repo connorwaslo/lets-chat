@@ -85,6 +85,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#60d688',
         borderRadius: 10
     }
-})
+});
 
 export default ContactCard;

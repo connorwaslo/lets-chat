@@ -32,6 +32,7 @@ function FriendRequests({ navigation }) {
         convertRequests();
     }
 
+    // Todo: This should be done on loading for friends
     function convertRequests() {
         // Look through contacts and if the phone number exists, add the whole contact
         let numbers = incomingRequests;

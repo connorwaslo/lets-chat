@@ -1,33 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, FlatList, View, Text } from 'react-native';
+import { FlatList } from 'react-native';
 import FriendCard from '../components/FriendCard';
+import { useSelector } from 'react-redux';
+import DrawerHeader from '../components/DrawerHeader';
 
-function Friends() {
-    const [loading, setLoading] = useState(false);
-    const [friends, setFriends] = useState([{
-        name: 'Test Contact',
-        status: 'ready',
-        phoneNumbers: [
-            '+16025554181'
-        ]
-    }]);
-
-    if (loading) {
-        return (
-            <View>
-                <Text>Loading...</Text>
-            </View>
-        )
-    }
+function Friends({ navigation }) {
+    const { friends } = useSelector(state => ({
+        friends: state.friends
+    }));
 
     return (
-        <SafeAreaView>
+        <DrawerHeader navigation={navigation}>
             <FlatList
                 data={friends}
                 renderItem={({ item }) => <FriendCard userInfo={item}/>}
                 keyExtractor={(item, index) => index.toString()}
             />
-        </SafeAreaView>
+        </DrawerHeader>
     )
 }
 
