@@ -8,6 +8,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import FriendRequests from './views/FriendRequests';
+import SignUp from './views/SignUp';
 
 function AppContainer() {
     const { loading } = useSelector(state => ({
@@ -21,9 +22,12 @@ function AppContainer() {
         return <Loading/>
     }
 
+    // Todo: If not authenticated render the auth stack
+
     return (
         <NavigationContainer style={styles.container}>
             <Drawer.Navigator>
+                <Drawer.Screen name='Sign Up' component={SignUp}/>
                 <Drawer.Screen name='Invite Friends' component={InviteContacts}/>
                 <Drawer.Screen name='Friend Requests' component={FriendRequests}/>
                 <Drawer.Screen name='Friends' component={Friends}/>
