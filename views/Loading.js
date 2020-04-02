@@ -12,8 +12,9 @@ import firebase from 'firebase/app';
 import 'firebase/database';
 import 'firebase/auth';
 import * as Contacts from 'expo-contacts';
+import * as RootNavigation from '../utils/RootNavigation';
 
-function Loading({ navigation }) {
+function Loading() {
     const dispatch = useDispatch();
     let contacts = [];
 
@@ -85,6 +86,8 @@ function Loading({ navigation }) {
             if (user) {
                 await _getContacts();
                 await _getFirebase();
+
+                RootNavigation.navigate('App');
             }
 
             dispatch(setAppLoading(false));

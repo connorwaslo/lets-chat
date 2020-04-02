@@ -5,6 +5,7 @@ import Friends from './views/Friends';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { navigationRef } from './utils/RootNavigation';
 import { StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import FriendRequests from './views/FriendRequests';
@@ -45,7 +46,7 @@ function AppContainer() {
     }
 
     return (
-        <NavigationContainer style={styles.container}>
+        <NavigationContainer ref={navigationRef} style={styles.container}>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name='Auth' component={AuthStack}/>
                 <Stack.Screen name='App' component={AppDrawer}/>
