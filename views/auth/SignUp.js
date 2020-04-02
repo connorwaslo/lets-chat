@@ -9,8 +9,9 @@ function SignUp({ navigation }) {
     const [pass, setPass] = useState('');
 
     function validatePassword() {
+        console.log(email, phone, pass);
         // Password parameters here
-        return true;
+        return false;
     }
 
     function handleSignUp() {
