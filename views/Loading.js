@@ -10,6 +10,7 @@ import {
 } from '../redux/actions/actions';
 import firebase from 'firebase/app';
 import 'firebase/database';
+import 'firebase/auth';
 import * as Contacts from 'expo-contacts';
 
 function Loading({ navigation }) {
@@ -80,11 +81,14 @@ function Loading({ navigation }) {
 
     async function _loadUserData() {
         // Todo: Check if the user is logged in first
-        // We'll just use placeholder data for now
-        await _getContacts();
-        await _getFirebase();
+        firebase.auth().onAuthStateChanged(async user => {
+            if (user) {
+                await _getContacts();
+                await _getFirebase();
+            }
 
-        dispatch(setAppLoading(false));
+            dispatch(setAppLoading(false));
+        });
     }
 
     return (
