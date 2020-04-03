@@ -7,11 +7,11 @@ import {
     SET_OUTGOING_REQUESTS,
     SET_INCOMING_REQUESTS,
     ADD_FRIEND,
-    DENY_FRIEND, SET_FRIENDS
+    DENY_FRIEND, SET_FRIENDS, SET_PHONE, SET_STATUS
 } from '../actions/actionTypes';
 
 const initUserState = {
-    loading: true,
+    loading: false,
     name: '',
     phone: '', // Todo: Add action
     status: '', // Todo: Add action
@@ -32,6 +32,16 @@ export function userReducer(state = initUserState, action) {
             return {
                 ...state,
                 name: action.name
+            };
+        case SET_PHONE:
+            return {
+                ...state,
+                phone: action.phone
+            };
+        case SET_STATUS:
+            return {
+                ...state,
+                phone: action.status
             };
         case SET_OUTGOING_REQUESTS:
             return {

@@ -3,7 +3,7 @@ import {
     SET_NAME,
     SET_CONTACTS,
     SET_OUTGOING_REQUESTS,
-    ADD_OUTGOING_REQUEST, SET_INCOMING_REQUESTS, ADD_FRIEND, DENY_FRIEND, SET_FRIENDS
+    ADD_OUTGOING_REQUEST, SET_INCOMING_REQUESTS, ADD_FRIEND, DENY_FRIEND, SET_FRIENDS, SET_PHONE, SET_STATUS
 } from './actionTypes';
 
 export const setAppLoading = loading => ({
@@ -14,6 +14,16 @@ export const setAppLoading = loading => ({
 export const setName = name => ({
     type: SET_NAME,
     name
+});
+
+export const setPhone = phone => ({
+    type: SET_PHONE,
+    phone
+});
+
+export const setStatus = status => ({
+    type: SET_STATUS,
+    status
 });
 
 export const setOutgoingRequests = requests => ({

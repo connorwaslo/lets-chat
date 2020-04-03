@@ -1,6 +1,8 @@
 export const SET_APP_LOADING = 'SET_APP_LOADING';
 
 export const SET_NAME = 'SET_NAME';
+export const SET_PHONE = 'SET_PHONE';
+export const SET_STATUS = 'SET_STATUS';
 export const SET_OUTGOING_REQUESTS = 'SET_OUTGOING_REQUESTS';
 export const SET_INCOMING_REQUESTS = 'SET_INCOMING_REQUESTS';
 export const SET_CONTACTS = 'SET_CONTACTS';
