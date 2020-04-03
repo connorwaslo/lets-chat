@@ -19,9 +19,7 @@ function SignUp({ navigation }) {
             firebase.auth().createUserWithEmailAndPassword(email, pass)
                 .then(() => {
                     // Todo: Go to screens where user can set their status
-                    // Todo: Implement auth stack
-
-                    navigation.navigate('Invite Friends');
+                    navigation.navigate('Status');
                 })
                 .catch(error => {
                     alert(error.message);

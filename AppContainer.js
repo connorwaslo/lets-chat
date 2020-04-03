@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import FriendRequests from './views/FriendRequests';
 import SignUp from './views/auth/SignUp';
 import LogIn from './views/auth/LogIn';
+import Status from './views/auth/Status';
 
 function AppContainer() {
     const { loading, name } = useSelector(state => ({
@@ -29,8 +30,10 @@ function AppContainer() {
     function AuthStack() {
         return (
             <Stack.Navigator>
-                <Stack.Screen name='Sign Up' component={SignUp}/>
-                <Stack.Screen name='Log In' component={LogIn}/>
+                {/*<Stack.Screen name='Sign Up' component={SignUp}/>
+                <Stack.Screen name='Log In' component={LogIn}/>*/}
+
+                <Stack.Screen name='Status' component={Status}/>
             </Stack.Navigator>
         )
     }

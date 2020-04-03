@@ -13,6 +13,8 @@ import {
 const initUserState = {
     loading: true,
     name: '',
+    phone: '', // Todo: Add action
+    status: '', // Todo: Add action
     friends: [],
     outgoingRequests: [],
     incomingRequests: [],
