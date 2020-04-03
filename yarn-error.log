@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files (x86)\nodejs\node.exe C:\Users\conno\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add expo-asset@~8.1.3 expo-contacts@~8.1.0 expo-font@~8.1.0 react-native-gesture-handler@~1.6.0 react-native-reanimated@~1.7.0 react-native-screens@~2.2.0 react-native-safe-area-context@0.7.3 @react-native-community/masked-view@0.1.6 react-native@https://github.com/expo/react-native/archive/sdk-37.0.0.tar.gz react@16.9.0 react-dom@16.9.0 react-native-web@^0.11.7
+  C:\Program Files (x86)\nodejs\node.exe C:\Users\conno\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add expo-firebase-recaptcha
 
 PATH: 
   C:\Users\conno\Documents\Programming\React-Native\lets-chat\node_modules\.bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files\ImageMagick-6.9.10-Q16;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.0\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.0\libnvvp;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Users\conno\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files (x86)\Windows Live\Shared;C:\Program Files\dotnet\;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Users\conno\AppData\Local\Android\sdk\platform-tools;C:\Program Files\IBM\Bluemix\bin;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Oracle\VirtualBox;C:\Program Files (x86)\nodejs\;C:\Program Files\Amazon\AWSCLI\bin\;C:\Program Files\Git\cmd;C:\tools\cuda;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.0\extras\CUPTI\libx64;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\poppler-0.68.0\bin;C:\Program Files\Tesseract-OCR;C:\Users\conno\.cargo\bin;C:\RailsInstaller\Git\cmd;C:\RailsInstaller\Ruby2.3.0\bin;C:\Users\conno\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Java\jre1.8.0_91\bin;C:\Users\conno\AppData\Local\atom\bin;C:\Users\conno\AppData\Local\GitHubDesktop\bin;C:\Users\conno\AppData\Local\Microsoft\WindowsApps;C:\Selenium\chromedriver.exe;C:\Program Files\Docker Toolbox;C:\Users\conno\DownAPK;C:\Users\conno\AppData\Roaming\npm;C:\Program Files\LLVM\bin;C:\Users\conno\AppData\Local\Programs\Python\Python37;C:\Users\conno\AppData\Local\Programs\Python\Python37\Scripts;C:\Users\conno\Anaconda3\Scripts;C:\Program Files\CMake\bin;C:\Users\conno\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\conno\Documents\Vanderbilt\Research\Spring 2019\View Dicom\Scripts\python.exe;C:\Users\conno\AppData\Local\Box\Box Edit\;C:\Program Files\poppler-0.68.0\bin;
@@ -24,25 +24,25 @@ npm manifest:
       "eject": "expo eject"
     },
     "dependencies": {
-      "@react-native-community/masked-view": "0.1.5",
+      "@react-native-community/masked-view": "0.1.6",
       "@react-navigation/drawer": "^5.3.4",
       "@react-navigation/native": "^5.1.3",
       "@react-navigation/stack": "^5.2.8",
       "expo": "^37.0.0",
-      "expo-asset": "~8.0.0",
-      "expo-contacts": "~8.0.0",
-      "expo-font": "~8.0.0",
+      "expo-asset": "~8.1.3",
+      "expo-contacts": "~8.1.0",
+      "expo-font": "~8.1.0",
       "firebase": "^7.13.1",
       "native-base": "^2.13.12",
-      "react": "~16.9.0",
-      "react-dom": "~16.9.0",
-      "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
+      "react": "16.9.0",
+      "react-dom": "16.9.0",
+      "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.0.tar.gz",
       "react-native-elements": "^1.2.7",
-      "react-native-gesture-handler": "~1.5.0",
-      "react-native-reanimated": "~1.4.0",
-      "react-native-safe-area-context": "0.6.0",
-      "react-native-screens": "2.0.0-alpha.12",
-      "react-native-web": "~0.11.7",
+      "react-native-gesture-handler": "~1.6.0",
+      "react-native-reanimated": "~1.7.0",
+      "react-native-safe-area-context": "0.7.3",
+      "react-native-screens": "~2.2.0",
+      "react-native-web": "^0.11.7",
       "react-redux": "^7.2.0",
       "redux": "^4.0.5"
     },
@@ -1305,9 +1305,9 @@ Lockfile:
       wcwidth "^1.0.1"
       ws "^1.1.0"
   
-  "@react-native-community/masked-view@0.1.5":
-    version "0.1.5"
-    resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.5.tgz#25421be6cd943a4b1660b62cfbcd45be8891462c"
+  "@react-native-community/masked-view@0.1.6":
+    version "0.1.6"
+    resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.6.tgz#c7f2ac187c1f25aa8c30d11baa8f4398eca3bb84"
   
   "@react-navigation/core@^5.3.1":
     version "5.3.1"
@@ -2458,14 +2458,6 @@ Lockfile:
       snapdragon "^0.8.1"
       to-regex "^3.0.1"
   
-  expo-asset@~8.0.0:
-    version "8.0.0"
-    resolved "https://registry.yarnpkg.com/expo-asset/-/expo-asset-8.0.0.tgz#400c7cf8693711ddc87da02d20a7d47bd517afeb"
-    dependencies:
-      blueimp-md5 "^2.10.0"
-      path-browserify "^1.0.0"
-      url-parse "^1.4.4"
-  
   expo-asset@~8.1.3:
     version "8.1.4"
     resolved "https://registry.yarnpkg.com/expo-asset/-/expo-asset-8.1.4.tgz#5265c28c1c279b2f9779269195bec4caf250ba5d"
@@ -2480,11 +2472,11 @@ Lockfile:
     version "9.0.0"
     resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-9.0.0.tgz#35c600079ee91d38fe4f56375caae6e90f122fdd"
   
-  expo-contacts@~8.0.0:
-    version "8.0.0"
-    resolved "https://registry.yarnpkg.com/expo-contacts/-/expo-contacts-8.0.0.tgz#495b61061538c458de949cfe56bedaef83a96490"
+  expo-contacts@~8.1.0:
+    version "8.1.0"
+    resolved "https://registry.yarnpkg.com/expo-contacts/-/expo-contacts-8.1.0.tgz#fce76b79e47943a847315186aa70e1fd68d65d02"
     dependencies:
-      uuid-js "^0.7.5"
+      uuid "^3.4.0"
   
   expo-error-recovery@~1.1.0:
     version "1.1.0"
@@ -2495,12 +2487,6 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/expo-file-system/-/expo-file-system-8.1.0.tgz#d6aa66fa32c19982b94d0013f963c5ee972dfd6d"
     dependencies:
       uuid "^3.4.0"
-  
-  expo-font@~8.0.0:
-    version "8.0.0"
-    resolved "https://registry.yarnpkg.com/expo-font/-/expo-font-8.0.0.tgz#33afd0b501caf8f0392aea77f08717090eeb8d41"
-    dependencies:
-      fontfaceobserver "^2.1.0"
   
   expo-font@~8.1.0:
     version "8.1.0"
@@ -2920,12 +2906,6 @@ Lockfile:
       nan "^2.13.2"
       node-pre-gyp "^0.14.0"
       protobufjs "^5.0.3"
-  
-  "hammerjs@https://github.com/naver/hammer.js.git":
-    version "2.0.17-snapshot"
-    resolved "https://github.com/naver/hammer.js.git#54bc698b25edd6e1b76ca975ebaced5ce0467d51"
-    dependencies:
-      "@types/hammerjs" "^2.0.36"
   
   has-ansi@^2.0.0:
     version "2.0.0"
@@ -4527,7 +4507,7 @@ Lockfile:
       shell-quote "^1.6.1"
       ws "^3.3.1"
   
-  react-dom@~16.9.0:
+  react-dom@16.9.0:
     version "16.9.0"
     resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.9.0.tgz#5e65527a5e26f22ae3701131bcccaee9fb0d3962"
     dependencies:
@@ -4566,12 +4546,11 @@ Lockfile:
       react-native-ratings "^6.3.0"
       react-native-status-bar-height "^2.2.0"
   
-  react-native-gesture-handler@~1.5.0:
-    version "1.5.6"
-    resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.5.6.tgz#5d90145f624e3707db2930f43ab41579683e2375"
+  react-native-gesture-handler@~1.6.0:
+    version "1.6.1"
+    resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.6.1.tgz#678e2dce250ed66e93af409759be22cd6375dd17"
     dependencies:
       "@egjs/hammerjs" "^2.0.17"
-      hammerjs "https://github.com/naver/hammer.js.git"
       hoist-non-react-statics "^2.3.1"
       invariant "^2.2.4"
       prop-types "^15.7.2"
@@ -4594,17 +4573,19 @@ Lockfile:
       lodash "^4.17.4"
       prop-types "^15.5.10"
   
-  react-native-reanimated@~1.4.0:
-    version "1.4.0"
-    resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.4.0.tgz#7f1acbf9be08492d834f512700570978052be2f9"
+  react-native-reanimated@~1.7.0:
+    version "1.7.1"
+    resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.7.1.tgz#6363c7f3ebbabc56a05d5dccaf09d95f3b6a2d69"
+    dependencies:
+      fbjs "^1.0.0"
   
-  react-native-safe-area-context@0.6.0:
-    version "0.6.0"
-    resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-0.6.0.tgz#f53f5a5bcafb462a8798a26b145e68946389ad60"
+  react-native-safe-area-context@0.7.3:
+    version "0.7.3"
+    resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-0.7.3.tgz#ad6bd4abbabe195332c53810e4ce5851eb21aa2a"
   
-  react-native-screens@2.0.0-alpha.12:
-    version "2.0.0-alpha.12"
-    resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.0.0-alpha.12.tgz#35a6ef3b472958e9d35f0ca9e582d0d158f8e379"
+  react-native-screens@~2.2.0:
+    version "2.2.0"
+    resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.2.0.tgz#cc4cdf17426fdda97ad93a5e812a1899390f1978"
     dependencies:
       debounce "^1.2.0"
   
@@ -4624,7 +4605,7 @@ Lockfile:
     version "3.1.2"
     resolved "https://registry.yarnpkg.com/react-native-view-shot/-/react-native-view-shot-3.1.2.tgz#8c8e84c67a4bc8b603e697dbbd59dbc9b4f84825"
   
-  react-native-web@~0.11.7:
+  react-native-web@^0.11.7:
     version "0.11.7"
     resolved "https://registry.yarnpkg.com/react-native-web/-/react-native-web-0.11.7.tgz#d173d5a9b58db23b6d442c4bc4c81e9939adac23"
     dependencies:
@@ -4639,9 +4620,9 @@ Lockfile:
       prop-types "^15.6.0"
       react-timer-mixin "^0.13.4"
   
-  "react-native@https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz":
+  "react-native@https://github.com/expo/react-native/archive/sdk-37.0.0.tar.gz":
     version "0.61.4"
-    resolved "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz#fc6d760c9395a1046632b17699718e40b91ea747"
+    resolved "https://github.com/expo/react-native/archive/sdk-37.0.0.tar.gz#daca56d4f78a3d3630bbc7175edb036245c8c5f7"
     dependencies:
       "@babel/runtime" "^7.0.0"
       "@react-native-community/cli" "^3.0.0-alpha.1"
@@ -4698,7 +4679,7 @@ Lockfile:
       raf "^3.1.0"
       tween-functions "^1.0.1"
   
-  react@~16.9.0:
+  react@16.9.0:
     version "16.9.0"
     resolved "https://registry.yarnpkg.com/react/-/react-16.9.0.tgz#40ba2f9af13bc1a38d75dbf2f4359a5185c4f7aa"
     dependencies:
@@ -5507,10 +5488,6 @@ Lockfile:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   
-  uuid-js@^0.7.5:
-    version "0.7.5"
-    resolved "https://registry.yarnpkg.com/uuid-js/-/uuid-js-0.7.5.tgz#6c886d02a53d2d40dcf25d91a170b4a7b25b94d0"
-  
   uuid@^3.3.2, uuid@^3.4.0:
     version "3.4.0"
     resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
@@ -5760,14 +5737,14 @@ Lockfile:
       yargs-parser "^7.0.0"
 
 Trace: 
-  Error: https://github.com/expo/react-native/archive/sdk-37.0.0.tar.gz: Request failed "500 Internal Server Error"
-      at Request.<anonymous> (C:\Users\conno\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:59356:26)
+  Error: https://registry.yarnpkg.com/expo-firebase-recaptcha: Not found
+      at Request.params.callback [as _callback] (C:\Users\conno\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:62098:18)
+      at Request.self.callback (C:\Users\conno\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:123085:22)
       at Request.emit (events.js:182:13)
-      at Request.module.exports.Request.onRequestResponse (C:\Users\conno\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:123971:10)
-      at ClientRequest.emit (events.js:187:15)
-      at HTTPParser.parserOnIncomingClient (_http_client.js:555:21)
-      at HTTPParser.parserOnHeadersComplete (_http_common.js:109:17)
-      at TLSSocket.socketOnData (_http_client.js:441:20)
-      at TLSSocket.emit (events.js:182:13)
-      at addChunk (_stream_readable.js:283:12)
-      at readableAddChunk (_stream_readable.js:264:11)
+      at Request.<anonymous> (C:\Users\conno\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:124068:10)
+      at Request.emit (events.js:182:13)
+      at IncomingMessage.<anonymous> (C:\Users\conno\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:123988:12)
+      at Object.onceWrapper (events.js:273:13)
+      at IncomingMessage.emit (events.js:187:15)
+      at endReadableNT (_stream_readable.js:1094:12)
+      at process._tickCallback (internal/process/next_tick.js:63:19)

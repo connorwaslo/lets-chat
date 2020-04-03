@@ -25,12 +25,16 @@ function LogIn({ navigation }) {
                 placeholder='Email*'
                 onChangeText={text => setEmail(text)}
                 value={email}
+                keyboardType='email-address'
+                textContentType='emailAddress'
                 style={styles.textInput}
             />
             <TextInput
                 placeholder='Password*'
                 onChangeText={text => setPass(text)}
                 value={pass}
+                secureTextEntry={true}
+                textContentType='password'
                 style={styles.textInput}
             />
 

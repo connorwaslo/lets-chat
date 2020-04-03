@@ -39,18 +39,24 @@ function SignUp({ navigation }) {
                 placeholder='Email*'
                 onChangeText={text => setEmail(text)}
                 value={email}
+                keyboardType='email-address'
+                textContentType='emailAddress'
                 style={styles.textInput}
             />
             <TextInput
                 placeholder='Phone Number*'
                 onChangeText={text => setPhone(text)}
                 value={phone}
+                keyboardType='phone-pad'
+                textContentType='telephoneNumber'
                 style={styles.textInput}
             />
             <TextInput
                 placeholder='Password*'
                 onChangeText={text => setPass(text)}
                 value={pass}
+                secureTextEntry={true}
+                textContentType='password'
                 style={styles.textInput}
             />
             <TouchableOpacity onPress={handleSignUp}>
