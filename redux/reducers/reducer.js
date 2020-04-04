@@ -11,10 +11,9 @@ import {
 } from '../actions/actionTypes';
 
 const initUserState = {
-    loading: false,
     name: '',
-    phone: '', // Todo: Add action
-    status: '', // Todo: Add action
+    phone: '',
+    status: '',
     friends: [],
     outgoingRequests: [],
     incomingRequests: [],
@@ -23,11 +22,6 @@ const initUserState = {
 
 export function userReducer(state = initUserState, action) {
     switch (action.type) {
-        case SET_APP_LOADING:
-            return {
-                ...state,
-                loading: action.loading
-            };
         case SET_NAME:
             return {
                 ...state,

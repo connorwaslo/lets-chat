@@ -1,8 +1,7 @@
 import React from 'react';
 import { View, Image, Text } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
-    setAppLoading,
     setContacts,
     setOutgoingRequests,
     setName,
@@ -81,17 +80,10 @@ function Loading() {
     }
 
     async function _loadUserData() {
-        // Todo: Check if the user is logged in first
-        firebase.auth().onAuthStateChanged(async user => {
-            if (user) {
-                await _getContacts();
-                await _getFirebase();
+        await _getContacts();
+        await _getFirebase();
 
-                RootNavigation.navigate('App');
-            }
-
-            dispatch(setAppLoading(false));
-        });
+        RootNavigation.navigate('App');
     }
 
     return (

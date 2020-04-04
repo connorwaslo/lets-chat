@@ -1,5 +1,3 @@
-export const SET_APP_LOADING = 'SET_APP_LOADING';
-
 export const SET_NAME = 'SET_NAME';
 export const SET_PHONE = 'SET_PHONE';
 export const SET_STATUS = 'SET_STATUS';

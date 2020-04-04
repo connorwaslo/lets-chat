@@ -7,33 +7,23 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { navigationRef } from './utils/RootNavigation';
 import { StyleSheet } from 'react-native';
-import { useSelector } from 'react-redux';
 import FriendRequests from './views/FriendRequests';
 import SignUp from './views/auth/SignUp';
 import LogIn from './views/auth/LogIn';
 import Status from './views/auth/Status';
 
 function AppContainer() {
-    const { loading, name } = useSelector(state => ({
-        loading: state.loading,
-        name: name
-    }));
-
     const Stack = createStackNavigator();
     const Drawer = createDrawerNavigator();
-
-    if (loading) {
-        return <Loading/>
-    }
 
     // Todo: If not authenticated render the auth stack
     function AuthStack() {
         return (
             <Stack.Navigator>
-                {/*<Stack.Screen name='Sign Up' component={SignUp}/>
-                <Stack.Screen name='Log In' component={LogIn}/>*/}
-
+                <Stack.Screen name='Sign Up' component={SignUp}/>
+                <Stack.Screen name='Log In' component={LogIn}/>
                 <Stack.Screen name='Status' component={Status}/>
+                <Stack.Screen name='Loading' component={Loading} options={{ cardStack: { gesturesEnabled: false }}}/>
             </Stack.Navigator>
         )
     }

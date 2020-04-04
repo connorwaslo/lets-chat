@@ -15,7 +15,7 @@ function Status({ navigation }) {
         firebase.database().ref('+16025554181/profile').update({
             status: selected
         }).then(() => {
-            navigation.navigate('App');
+            navigation.navigate('Loading');
         }).catch(error => {
             alert(error.message);
 

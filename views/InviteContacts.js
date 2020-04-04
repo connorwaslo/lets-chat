@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FlatList } from 'react-native';
 import ContactCard from '../components/ContactCard';
 import { useSelector } from 'react-redux';
@@ -8,6 +8,10 @@ function InviteContacts({ navigation }) {
     const { contacts } = useSelector(state => ({
         contacts: state.contacts
     }));
+
+    useEffect(() => {
+        console.log('Contacts:', contacts);
+    }, []);
 
     return (
         <DrawerHeader navigation={navigation} >

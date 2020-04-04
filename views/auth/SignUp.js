@@ -11,7 +11,7 @@ function SignUp({ navigation }) {
     function validatePassword() {
         console.log(email, phone, pass);
         // Password parameters here
-        return false;
+        return true;
     }
 
     function handleSignUp() {

@@ -6,11 +6,6 @@ import {
     ADD_OUTGOING_REQUEST, SET_INCOMING_REQUESTS, ADD_FRIEND, DENY_FRIEND, SET_FRIENDS, SET_PHONE, SET_STATUS
 } from './actionTypes';
 
-export const setAppLoading = loading => ({
-    type: SET_APP_LOADING,
-    loading
-});
-
 export const setName = name => ({
     type: SET_NAME,
     name

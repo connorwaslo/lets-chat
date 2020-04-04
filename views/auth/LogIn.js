@@ -10,7 +10,7 @@ function LogIn({ navigation }) {
     function handleLogIn() {
         firebase.auth().signInWithEmailAndPassword(email, pass)
             .then(() => {
-                navigation.navigate('App');
+                navigation.navigate('Loading');
             })
             .catch(error => {
                 alert(error.message);
