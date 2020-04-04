@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Image, Text } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
     setContacts,
     setOutgoingRequests,
@@ -14,13 +14,17 @@ import * as Contacts from 'expo-contacts';
 import * as RootNavigation from '../utils/RootNavigation';
 
 function Loading() {
+    const { phone } = useSelector(state => ({
+        phone: state.phone
+    }));
     const dispatch = useDispatch();
     let contacts = [];
 
     async function _getFirebase() {
-        await firebase.database().ref('+16025554181/').once('value')
+        await firebase.database().ref(phone).once('value')
             .then(snapshot => {
-                let name = (snapshot.val() && snapshot.val().name) || 'No Name';
+                let name = (snapshot.val() && snapshot.val().profile.name) || 'No Name';
+                let incomingRequests = (snapshot.val() && snapshot.val().incomingRequests) || [];
                 let outgoingRequests = (snapshot.val() && snapshot.val().outgoingRequests) || [];
                 let friends = (snapshot.val() && snapshot.val().friends) || [];
 
@@ -40,6 +44,7 @@ function Loading() {
                 });
 
                 dispatch(setName(name));
+                dispatch(setIncomingRequests(incomingRequests));
                 dispatch(setOutgoingRequests(outgoingRequests));
                 dispatch(setFriends(friendContacts));
             })
