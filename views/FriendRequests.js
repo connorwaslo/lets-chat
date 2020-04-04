@@ -18,7 +18,7 @@ function FriendRequests({ navigation }) {
 
     if (incomingRequests == null) {
         return (
-            <DrawerHeader navigation={navigation}>
+            <DrawerHeader navigation={navigation} title='Friend Requests'>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={{ textAlign: 'center' }}>
                         No requests right now!
@@ -65,7 +65,7 @@ function FriendRequests({ navigation }) {
     }
 
     return (
-        <DrawerHeader navigation={navigation}>
+        <DrawerHeader navigation={navigation} title='Friend Requests'>
             <FlatList
                 data={requests}
                 renderItem={({ item }) => <RequestCard item={item}/>}

@@ -10,7 +10,7 @@ function Friends({ navigation }) {
     }));
 
     return (
-        <DrawerHeader navigation={navigation}>
+        <DrawerHeader navigation={navigation} title='Friends'>
             <FlatList
                 data={friends}
                 renderItem={({ item }) => <FriendCard userInfo={item}/>}

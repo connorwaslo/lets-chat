@@ -14,7 +14,7 @@ function InviteContacts({ navigation }) {
     }, []);
 
     return (
-        <DrawerHeader navigation={navigation} >
+        <DrawerHeader navigation={navigation} title='Invite Contacts'>
             <FlatList
                 data={contacts}
                 renderItem={({ item }) => <ContactCard userInfo={item}/>}
