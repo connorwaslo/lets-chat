@@ -51,10 +51,6 @@ function Loading() {
             .catch(error => {
                 console.log('Could not load user data:', error.message);
             });
-
-        await firebase.database().ref('+16025554181/incomingRequests').on('value', snapshot => {
-            dispatch(setIncomingRequests(snapshot.val()));
-        });
     }
 
     async function _getContacts() {
