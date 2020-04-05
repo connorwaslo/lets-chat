@@ -6,43 +6,43 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addFriend, denyFriend } from '../redux/actions/actions';
 
 function RequestCard({ item }) {
-    const { name, phone } = item;
-    const { incomingRequests, friends, contacts } = useSelector(state => ({
+    const { name, phoneNumber } = item;
+    const { incomingRequests, friends, phone } = useSelector(state => ({
         incomingRequests: state.incomingRequests,
         friends: state.friends,
-        contacts: state.contacts
+        phone: state.phone
     }));
     const dispatch = useDispatch();
 
     function handleAccept() {
         // Do nothing if already a friend...
-        if (friends.includes(phone)) {
+        if (friends.includes(phoneNumber)) {
             alert('This person is already your friend... not sure how we got here.');
             return;
         }
 
         // Update redux
         let newRequests = incomingRequests;
-        newRequests = newRequests.filter(item => item !== phone);
+        newRequests = newRequests.filter(item => item !== phoneNumber);
 
         // Todo: May need to use uid here instead
         dispatch(addFriend({
             name: name,
-            status: 'ready',
-            phone: phone
+            status: 'ready', // Todo: Should be user's specific status
+            phone: phoneNumber
         }));
 
         // Remove from incomingRequests in firebase and add to friends
-        // Todo: Change hardcoded phone number to be current user
-        firebase.database().ref('+16025554181/incomingRequests').set(newRequests)
+        firebase.database().ref(phone + '/incomingRequests').set(newRequests)
             .then(() => {
                 // Todo: set database to be all phone numbers not all
                 let friendNums = [];
                 friends.forEach(item => {
                     friendNums.push(item.phone);
                 });
+
                 // If successfully saved new incomingRequests in firebase then add to friends
-                firebase.database().ref('+16025554181/friends').set(friendNums)
+                firebase.database().ref(phone + '/friends').set(friendNums)
                     .then(() => {})
                     .catch(error => console.log('Error saving friends', error.message));
             })
@@ -53,12 +53,13 @@ function RequestCard({ item }) {
 
     function handleDeny() {
         let newRequests = incomingRequests;
-        newRequests = newRequests.filter(item => item !== phone);
+        newRequests = newRequests.filter(item => item !== phoneNumber);
+        console.log('New Requests:', newRequests);
 
-        dispatch(denyFriend(phone));
+        dispatch(denyFriend(phoneNumber));
 
         // Remove that request from firebase
-        firebase.database().ref('+16025554181/incomingRequests').set(newRequests)
+        firebase.database().ref(phone + '/incomingRequests').set(newRequests)
             .catch(error => {
                 console.log('Could not set incomingRequests on friend accept', error.message);
             });
@@ -66,7 +67,7 @@ function RequestCard({ item }) {
 
     return (
         <View style={{ flex: 1, backgroundColor: 'lightblue', padding: 10, margin: 5 }}>
-            <Text style={{ textAlign: 'center', fontSize: 18 }}>{name}  |  {phone}</Text>
+            <Text style={{ textAlign: 'center', fontSize: 18 }}>{name}  |  {phoneNumber}</Text>
             <TouchableOpacity onPress={handleAccept}>
                 <View style={{ padding: 10, marginVertical: 5, backgroundColor: 'lightgreen' }}>
                     <Text style={{ textAlign: 'center' }}>Accept</Text>

@@ -9,10 +9,6 @@ function Friends({ navigation }) {
         friends: state.friends
     }));
 
-    useEffect(() => {
-        console.log('Friends:', friends);
-    }, []);
-
     return (
         <DrawerHeader navigation={navigation}>
             <FlatList

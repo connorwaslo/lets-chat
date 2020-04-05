@@ -12,10 +12,6 @@ function FriendRequests({ navigation }) {
         contacts: state.contacts
     }));
 
-    useEffect(() => {
-        console.log('Incoming Requests:', incomingRequests);
-    }, []);
-
     if (requests.length > 0 && !incomingRequests) {
         setRequests([]);
     }
@@ -48,7 +44,7 @@ function FriendRequests({ navigation }) {
                     curRequests.push({
                         name: contact.name,
                         status: contact.status,
-                        phone: num
+                        phoneNumber: num
                     });
                     numbers = numbers.filter(item => item !== num); // Remove it from list
                 }
@@ -60,7 +56,7 @@ function FriendRequests({ navigation }) {
             curRequests.push({
                 name: 'Unknown',
                 status: 'Unknown',
-                phone: num
+                phoneNumber: num
             });
         });
         numbers = [];
