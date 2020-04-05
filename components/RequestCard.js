@@ -14,7 +14,7 @@ function RequestCard({ item }) {
     }));
     const dispatch = useDispatch();
 
-    function handleAccept() {
+    async function handleAccept() {
         // Do nothing if already a friend...
         // Todo Change this to check all friends objects
         if (friends.includes(phoneNumber)) {
@@ -26,10 +26,19 @@ function RequestCard({ item }) {
         let newRequests = incomingRequests;
         newRequests = newRequests.filter(item => item !== phoneNumber);
 
-        // Todo: May need to use uid here instead
+        // Get new friend's status
+        let status = '';
+        await firebase.database().ref(phoneNumber + '/profile').once('value')
+            .then(snapshot => {
+                status = (snapshot.val() && snapshot.val().status) || 'busy';
+            })
+            .catch(error => {
+                console.log('Error getting new friend status', error.message);
+            });
+
         dispatch(addFriend({
             name: name,
-            status: 'ready', // Todo: Should be user's specific status
+            status: status,
             phone: phoneNumber
         }));
 
