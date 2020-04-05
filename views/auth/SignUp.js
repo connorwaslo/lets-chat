@@ -26,7 +26,6 @@ function SignUp({ navigation }) {
                 } else {
                     for (const item in allAccounts) {
                         let existingNum = Object.keys(allAccounts[item])[0];
-                        console.log(phone, existingNum);
 
                         // Check and see if the phone numbers match
                         if (phone === existingNum) {
@@ -43,7 +42,6 @@ function SignUp({ navigation }) {
                 console.log('Could not validate phone number', error.message);
             });
 
-        console.log('Returning', validPassword && validPhoneNum);
         return validPassword && validPhoneNum;
     }
 

@@ -49,15 +49,12 @@ function Loading() {
     }
 
     async function _getFirebase() {
-        console.log('Looking in', phone, 'firebase');
         await firebase.database().ref(phone).once('value')
             .then(snapshot => {
                 let name = (snapshot.val() && snapshot.val().profile.name) || 'No Name';
                 let incomingRequests = (snapshot.val() && snapshot.val().incomingRequests) || [];
                 let outgoingRequests = (snapshot.val() && snapshot.val().outgoingRequests) || [];
                 let friends = (snapshot.val() && snapshot.val().friends) || [];
-
-                console.log('Firebase friends:', friends);
 
                 // Convert friends from phone numbers to full contacts
                 // This only adds friends that can be found in your contacts
@@ -77,7 +74,6 @@ function Loading() {
                 dispatch(setName(name));
                 dispatch(setIncomingRequests(incomingRequests));
                 dispatch(setOutgoingRequests(outgoingRequests));
-                // dispatch(setFriends(friendContacts));
                 allFriends = friendContacts;
             })
             .catch(error => {
@@ -88,15 +84,12 @@ function Loading() {
     async function _getFriends() {
         let updatedFriends = [];
         allFriends.forEach(async friend => {
-            console.log('curFriend:', allFriends[friend]);
             let phone = friend.phone;
 
             const prevLength = updatedFriends.length;
             const path = phone + '/profile';
-            console.log('Pulling from path:', path);
             await firebase.database().ref(path).once('value')
                 .then(snapshot => {
-                    console.log('Snapshot.val():', snapshot.val());
                     let status = (snapshot.val() && snapshot.val().status) || 'unknown';
 
                     updatedFriends.push({
@@ -111,7 +104,6 @@ function Loading() {
 
             // Todo: not even sure if i need this but we'll leave it until I do better bug testing
             if (prevLength === updatedFriends.length) {
-                console.log('Failed to make call in firebase, adding manually:', friend.phone);
                 updatedFriends.push({
                     name: friend.name,
                     status: 'unknown',

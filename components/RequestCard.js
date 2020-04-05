@@ -16,6 +16,7 @@ function RequestCard({ item }) {
 
     function handleAccept() {
         // Do nothing if already a friend...
+        // Todo Change this to check all friends objects
         if (friends.includes(phoneNumber)) {
             alert('This person is already your friend... not sure how we got here.');
             return;
@@ -35,7 +36,6 @@ function RequestCard({ item }) {
         // Remove from incomingRequests in firebase and add to friends
         firebase.database().ref(phone + '/incomingRequests').set(newRequests)
             .then(() => {
-                // Todo: set database to be all phone numbers not all
                 let friendNums = [];
                 friends.forEach(item => {
                     friendNums.push(item.phone);
@@ -43,7 +43,6 @@ function RequestCard({ item }) {
 
                 // If successfully saved new incomingRequests in firebase then add to friends
                 firebase.database().ref(phone + '/friends').set(friendNums)
-                    .then(() => {})
                     .catch(error => console.log('Error saving friends', error.message));
             })
             .catch(error => {
@@ -54,7 +53,6 @@ function RequestCard({ item }) {
     function handleDeny() {
         let newRequests = incomingRequests;
         newRequests = newRequests.filter(item => item !== phoneNumber);
-        console.log('New Requests:', newRequests);
 
         dispatch(denyFriend(phoneNumber));
 
