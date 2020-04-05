@@ -11,6 +11,7 @@ import FriendRequests from './views/FriendRequests';
 import SignUp from './views/auth/SignUp';
 import LogIn from './views/auth/LogIn';
 import Status from './views/auth/Status';
+import { Ionicons } from '@expo/vector-icons';
 
 function AppContainer() {
     const Stack = createStackNavigator();
@@ -32,9 +33,18 @@ function AppContainer() {
     function AppDrawer() {
         return (
             <Drawer.Navigator>
-                <Drawer.Screen name='Invite Friends' component={InviteContacts}/>
-                <Drawer.Screen name='Friend Requests' component={FriendRequests}/>
-                <Drawer.Screen name='Friends' component={Friends}/>
+                <Drawer.Screen
+                    name='Friends'
+                    component={Friends}
+                    options={{ drawerIcon: ({ focused, color, size }) => <Ionicons color={color} size={size} name='ios-videocam'/>}}/>
+                <Drawer.Screen
+                    name='Invite Friends'
+                    component={InviteContacts}
+                    options={{ drawerIcon: ({ focused, color, size }) => <Ionicons color={color} size={size} name='ios-person-add'/>}}/>
+                <Drawer.Screen
+                    name='Friend Requests'
+                    component={FriendRequests}
+                    options={{ drawerIcon: ({ focused, color, size }) => <Ionicons color={color} size={size} name='ios-paper-plane'/>}}/>
             </Drawer.Navigator>
         )
     }
