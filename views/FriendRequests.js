@@ -1,16 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import DrawerHeader from '../components/DrawerHeader';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FlatList, View, Text } from 'react-native';
 import RequestCard from '../components/RequestCard';
+import firebase from 'firebase/app';
+import 'firebase/database';
+import { setIncomingRequests } from '../redux/actions/actions';
 
 // Incoming requests
 function FriendRequests({ navigation }) {
     const [requests, setRequests] = useState([]);
-    const { incomingRequests, contacts } = useSelector(state => ({
+    const { incomingRequests, contacts, phone } = useSelector(state => ({
         incomingRequests: state.incomingRequests,
-        contacts: state.contacts
+        contacts: state.contacts,
+        phone: state.phone
     }));
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        // console.log('Incoming Requests:', incomingRequests);
+        firebase.database().ref(phone + '/incomingRequests').on('value', snapshot => {
+            let incoming = snapshot.val() || [];
+
+            dispatch(setIncomingRequests(incoming));
+        })
+    }, []);
 
     if (requests.length > 0 && !incomingRequests) {
         setRequests([]);
@@ -28,6 +42,8 @@ function FriendRequests({ navigation }) {
         )
     }
 
+    // Note: This doesn't account for undefined in incomingRequests - but that shouldn't happen anyways
+    //       Will be able to tell better once we have user testing
     if (requests.length !== incomingRequests.length) {
         convertRequests();
     }
@@ -68,7 +84,7 @@ function FriendRequests({ navigation }) {
         <DrawerHeader navigation={navigation} title='Friend Requests'>
             <FlatList
                 data={requests}
-                renderItem={({ item }) => <RequestCard item={item}/>}
+                renderItem={({ item }) => item ? <RequestCard item={item}/> : null}
                 keyExtractor={(item, index) => index.toString()}
             />
         </DrawerHeader>

@@ -14,7 +14,6 @@ function FriendCard({ userInfo }) {
         firebase.database().ref(phone + '/profile').on('value', snapshot => {
             let status = (snapshot.val() && snapshot.val().status) || 'error';
 
-            console.log(phone, '=', status);
             dispatch(updateFriendStatus({
                 name: name,
                 phone: phone,
