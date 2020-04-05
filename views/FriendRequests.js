@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DrawerHeader from '../components/DrawerHeader';
 import { useSelector } from 'react-redux';
 import { FlatList, View, Text } from 'react-native';
@@ -11,6 +11,10 @@ function FriendRequests({ navigation }) {
         incomingRequests: state.incomingRequests,
         contacts: state.contacts
     }));
+
+    useEffect(() => {
+        console.log('Incoming Requests:', incomingRequests);
+    }, []);
 
     if (requests.length > 0 && !incomingRequests) {
         setRequests([]);

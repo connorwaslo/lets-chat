@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FlatList } from 'react-native';
 import FriendCard from '../components/FriendCard';
 import { useSelector } from 'react-redux';
@@ -8,6 +8,10 @@ function Friends({ navigation }) {
     const { friends } = useSelector(state => ({
         friends: state.friends
     }));
+
+    useEffect(() => {
+        console.log('Friends:', friends);
+    }, []);
 
     return (
         <DrawerHeader navigation={navigation}>

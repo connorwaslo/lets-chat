@@ -19,39 +19,7 @@ function Loading() {
     }));
     const dispatch = useDispatch();
     let contacts = [];
-
-    async function _getFirebase() {
-        await firebase.database().ref(phone).once('value')
-            .then(snapshot => {
-                let name = (snapshot.val() && snapshot.val().profile.name) || 'No Name';
-                let incomingRequests = (snapshot.val() && snapshot.val().incomingRequests) || [];
-                let outgoingRequests = (snapshot.val() && snapshot.val().outgoingRequests) || [];
-                let friends = (snapshot.val() && snapshot.val().friends) || [];
-
-                // Convert friends from phone numbers to full contacts
-                // This only adds friends that can be found in your contacts
-                let friendContacts = [];
-                contacts.forEach(contact => {
-                    contact.phoneNumbers.forEach(num => {
-                        if (friends.includes(num)) {
-                            friendContacts.push({
-                                name: contact.name,
-                                status: contact.status,
-                                phone: num
-                            });
-                        }
-                    })
-                });
-
-                dispatch(setName(name));
-                dispatch(setIncomingRequests(incomingRequests));
-                dispatch(setOutgoingRequests(outgoingRequests));
-                dispatch(setFriends(friendContacts));
-            })
-            .catch(error => {
-                console.log('Could not load user data:', error.message);
-            });
-    }
+    let allFriends = [];
 
     async function _getContacts() {
         const { status } = await Contacts.requestPermissionsAsync();
@@ -80,9 +48,85 @@ function Loading() {
         }
     }
 
+    async function _getFirebase() {
+        console.log('Looking in', phone, 'firebase');
+        await firebase.database().ref(phone).once('value')
+            .then(snapshot => {
+                let name = (snapshot.val() && snapshot.val().profile.name) || 'No Name';
+                let incomingRequests = (snapshot.val() && snapshot.val().incomingRequests) || [];
+                let outgoingRequests = (snapshot.val() && snapshot.val().outgoingRequests) || [];
+                let friends = (snapshot.val() && snapshot.val().friends) || [];
+
+                console.log('Firebase friends:', friends);
+
+                // Convert friends from phone numbers to full contacts
+                // This only adds friends that can be found in your contacts
+                let friendContacts = [];
+                contacts.forEach(contact => {
+                    contact.phoneNumbers.forEach(num => {
+                        if (friends.includes(num)) {
+                            friendContacts.push({
+                                name: contact.name,
+                                status: contact.status,
+                                phone: num
+                            });
+                        }
+                    })
+                });
+
+                dispatch(setName(name));
+                dispatch(setIncomingRequests(incomingRequests));
+                dispatch(setOutgoingRequests(outgoingRequests));
+                // dispatch(setFriends(friendContacts));
+                allFriends = friendContacts;
+            })
+            .catch(error => {
+                console.log('Could not load user data:', error.message);
+            });
+    }
+
+    async function _getFriends() {
+        let updatedFriends = [];
+        allFriends.forEach(async friend => {
+            console.log('curFriend:', allFriends[friend]);
+            let phone = friend.phone;
+
+            const prevLength = updatedFriends.length;
+            const path = phone + '/profile';
+            console.log('Pulling from path:', path);
+            await firebase.database().ref(path).once('value')
+                .then(snapshot => {
+                    console.log('Snapshot.val():', snapshot.val());
+                    let status = (snapshot.val() && snapshot.val().status) || 'unknown';
+
+                    updatedFriends.push({
+                        name: friend.name,
+                        status: status,
+                        phone: phone
+                    });
+                })
+                .catch(error => {
+                    console.log('Could not find friend', phone, error.message);
+                });
+
+            // Todo: not even sure if i need this but we'll leave it until I do better bug testing
+            if (prevLength === updatedFriends.length) {
+                console.log('Failed to make call in firebase, adding manually:', friend.phone);
+                updatedFriends.push({
+                    name: friend.name,
+                    status: 'unknown',
+                    phone: friend.phone
+                });
+            }
+        });
+
+        dispatch(setFriends(updatedFriends));
+    }
+
     async function _loadUserData() {
         await _getContacts();
         await _getFirebase();
+        await _getFriends();
 
         RootNavigation.navigate('App');
     }
