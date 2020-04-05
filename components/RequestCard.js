@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import firebase from 'firebase/app';
 import 'firebase/database';
@@ -13,6 +13,10 @@ function RequestCard({ item }) {
         phone: state.phone
     }));
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        console.log('Friends:', friends);
+    }, []);
 
     function handleAccept() {
         // Do nothing if already a friend...
@@ -37,13 +41,62 @@ function RequestCard({ item }) {
         firebase.database().ref(phone + '/incomingRequests').set(newRequests)
             .then(() => {
                 let friendNums = [];
-                friends.forEach(item => {
-                    friendNums.push(item.phone);
+                console.log('Existing friends:', friends);
+
+                // Redux has already been updated by now, so friends includes new friend as well
+                friends.forEach(_item => {
+                    friendNums.push(_item.phone);
                 });
+
+                console.log('friendNums:', friendNums);
 
                 // If successfully saved new incomingRequests in firebase then add to friends
                 firebase.database().ref(phone + '/friends').set(friendNums)
-                    .catch(error => console.log('Error saving friends', error.message));
+                    .then(() => {
+                        // Update new friend's friends list as well
+                        const path = phoneNumber + '/friends';
+
+                        // Read their current friends list to append to
+                        firebase.database().ref(path).once('value')
+                            .then(snapshot => {
+                                let distFriends = snapshot.val();
+                                if (!distFriends) {
+                                    firebase.database().ref(path).set([
+                                        phone
+                                    ]).catch(error => {
+                                        console.log('!distFriends, Could not save friend\'s friends', error.message);
+                                    });
+                                } else {
+                                    firebase.database().ref(path).set([
+                                        ...distFriends,
+                                        phone
+                                    ]).catch(error => {
+                                        console.log('Could not save friend\'s friends', error.message);
+                                    });
+                                }
+
+                                // Remove other friend's outgoing Requests too
+                                firebase.database().ref(phoneNumber + '/outgoingRequests').once('value')
+                                    .then(snapshot => {
+                                        let outgoing = snapshot.val();
+                                        outgoing = outgoing.filter(req => {
+                                            console.log('Req:', req);
+                                            console.log('Phone:', phone);
+                                            return req !== phone;
+                                        });
+                                        console.log('outgoing:', outgoing);
+
+                                        firebase.database().ref(phoneNumber + '/outgoingRequests')
+                                            .set(outgoing)
+                                            .catch(error => console.log('Could not remove from outgoing', error.message));
+                                    })
+                            })
+
+                        // Set their list with new phone number too
+                    })
+                    .catch(error => {
+                        console.log('Error saving friends', error.message)
+                    });
             })
             .catch(error => {
                 console.log('Could not set incomingRequests on friend accept', error.message);

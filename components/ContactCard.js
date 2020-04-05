@@ -7,7 +7,10 @@ import { addOutgoingRequest } from '../redux/actions/actions';
 
 function ContactCard({ userInfo }) {
     const { name } = userInfo;
-    const phone = userInfo.phoneNumbers[0]; // Todo: Parse this
+    const phoneNum = userInfo.phoneNumbers[0]; // Todo: Parse this
+    const { phone } = useSelector(state => ({
+        phone: state.phone
+    }));
 
     const dispatch = useDispatch();
     const { outgoingRequests } = useSelector(state => ({
@@ -21,9 +24,9 @@ function ContactCard({ userInfo }) {
      */
     async function _handleInviteFriend() {
         // Check if already sent request
-        if (!outgoingRequests.includes(phone)) {
+        if (!outgoingRequests.includes(phoneNum)) {
             await _requestFriend();
-            dispatch(addOutgoingRequest(phone));
+            dispatch(addOutgoingRequest(phoneNum));
         }
     }
 
@@ -31,11 +34,32 @@ function ContactCard({ userInfo }) {
      * To be called once firebase already checked for duplicates
      */
     function _requestFriend() {
-        firebase.database().ref('+16025554181/outgoingRequests')
+        firebase.database().ref(phone + '/outgoingRequests')
             .set([
                 ...outgoingRequests,
-                phone
+                phoneNum
             ])
+            .then(() => {
+                const path = phoneNum + '/incomingRequests';
+                firebase.database().ref(path).once('value')
+                    .then(snapshot => {
+                        let incReqs = snapshot.val();
+                        console.log('Incoming Requests:', incReqs);
+                        if (!incReqs) {
+                            firebase.database().ref(path).set([
+                                phone
+                            ]).catch(error => console.log('Could not set first inc req:', error.message));
+                        } else {
+                            firebase.database().ref(path).set([
+                                ...incReqs,
+                                phone
+                            ]).catch(error => console.log('Could not update inc reqs:', error.message));
+                        }
+                    })
+                    .catch(error => {
+                        console.log('Error setting incoming request to your friend:', error.message);
+                    })
+            })
             .catch(error => {
                 console.log('Something went wrong requesting friend', error.message);
             })
@@ -44,7 +68,7 @@ function ContactCard({ userInfo }) {
     return (
         <View style={styles.container}>
             <View style={styles.left}>
-                <Text style={styles.contact}>{name}{'\n'}{phone}</Text>
+                <Text style={styles.contact}>{name}{'\n'}{phoneNum}</Text>
             </View>
             <View style={styles.right}>
                 <TouchableOpacity onPress={_handleInviteFriend}>

@@ -56,6 +56,8 @@ function Loading() {
                 let outgoingRequests = (snapshot.val() && snapshot.val().outgoingRequests) || [];
                 let friends = (snapshot.val() && snapshot.val().friends) || [];
 
+                console.log('Firebase friends:', friends);
+
                 // Convert friends from phone numbers to full contacts
                 // This only adds friends that can be found in your contacts
                 let friendContacts = [];
@@ -67,8 +69,19 @@ function Loading() {
                                 status: contact.status,
                                 phone: num
                             });
+
+                            friends = friends.filter(indiv => indiv !== num);
                         }
                     })
+                });
+
+                // Add the remaining ones with name unknown
+                friends.forEach(num => {
+                    friendContacts.push({
+                        name: 'Not a Contact',
+                        status: 'ready',
+                        phone: num
+                    });
                 });
 
                 dispatch(setName(name));
@@ -82,6 +95,7 @@ function Loading() {
     }
 
     async function _getFriends() {
+        console.log('allFriends', allFriends);
         let updatedFriends = [];
         allFriends.forEach(async friend => {
             let phone = friend.phone;
@@ -92,11 +106,18 @@ function Loading() {
                 .then(snapshot => {
                     let status = (snapshot.val() && snapshot.val().status) || 'unknown';
 
-                    updatedFriends.push({
+                    let newFriend = {
                         name: friend.name,
                         status: status,
                         phone: phone
-                    });
+                    };
+
+                    console.log('newFriend:', newFriend);
+                    updatedFriends.push(newFriend);
+
+                    // Just update redux every iteration
+                    console.log('Updated friends:', updatedFriends);
+                    dispatch(setFriends(updatedFriends));
                 })
                 .catch(error => {
                     console.log('Could not find friend', phone, error.message);
@@ -111,8 +132,6 @@ function Loading() {
                 });
             }
         });
-
-        dispatch(setFriends(updatedFriends));
     }
 
     async function _loadUserData() {
