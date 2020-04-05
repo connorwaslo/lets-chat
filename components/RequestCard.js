@@ -14,10 +14,6 @@ function RequestCard({ item }) {
     }));
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        console.log('Friends:', friends);
-    }, []);
-
     function handleAccept() {
         // Do nothing if already a friend...
         // Todo Change this to check all friends objects
@@ -41,14 +37,11 @@ function RequestCard({ item }) {
         firebase.database().ref(phone + '/incomingRequests').set(newRequests)
             .then(() => {
                 let friendNums = [];
-                console.log('Existing friends:', friends);
 
                 // Redux has already been updated by now, so friends includes new friend as well
                 friends.forEach(_item => {
                     friendNums.push(_item.phone);
                 });
-
-                console.log('friendNums:', friendNums);
 
                 // If successfully saved new incomingRequests in firebase then add to friends
                 firebase.database().ref(phone + '/friends').set(friendNums)
@@ -79,12 +72,7 @@ function RequestCard({ item }) {
                                 firebase.database().ref(phoneNumber + '/outgoingRequests').once('value')
                                     .then(snapshot => {
                                         let outgoing = snapshot.val();
-                                        outgoing = outgoing.filter(req => {
-                                            console.log('Req:', req);
-                                            console.log('Phone:', phone);
-                                            return req !== phone;
-                                        });
-                                        console.log('outgoing:', outgoing);
+                                        outgoing = outgoing.filter(req => req !== phone);
 
                                         firebase.database().ref(phoneNumber + '/outgoingRequests')
                                             .set(outgoing)

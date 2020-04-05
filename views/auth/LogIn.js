@@ -6,9 +6,9 @@ import { useDispatch } from 'react-redux';
 import { setPhone } from '../../redux/actions/actions';
 
 function LogIn({ navigation }) {
-    const [email, setEmail] = useState('test@gmail.com');
-    const [phone, setPhoneNum] = useState('+16233266838');
-    const [pass, setPass] = useState('password');
+    const [email, setEmail] = useState('');
+    const [phone, setPhoneNum] = useState('');
+    const [pass, setPass] = useState('');
     const dispatch = useDispatch();
 
     function handleLogIn() {
