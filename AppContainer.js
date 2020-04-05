@@ -20,10 +20,11 @@ function AppContainer() {
     function AuthStack() {
         return (
             <Stack.Navigator>
-                <Stack.Screen name='Sign Up' component={SignUp}/>
                 <Stack.Screen name='Log In' component={LogIn}/>
+                <Stack.Screen name='Sign Up' component={SignUp}/>
                 <Stack.Screen name='Status' component={Status}/>
-                <Stack.Screen name='Loading' component={Loading} options={{ cardStack: { gesturesEnabled: false }}}/>
+                <Stack.Screen name='Loading' component={Loading}
+                              options={{ cardStack: { gesturesEnabled: false }, headerShown: false }}/>
             </Stack.Navigator>
         )
     }

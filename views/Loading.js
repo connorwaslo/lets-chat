@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Image, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -20,6 +20,10 @@ function Loading() {
     const dispatch = useDispatch();
     let contacts = [];
     let allFriends = [];
+
+    useEffect(() => {
+        _loadUserData();
+    }, []);
 
     async function _getContacts() {
         const { status } = await Contacts.requestPermissionsAsync();
@@ -143,12 +147,8 @@ function Loading() {
     }
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Text>Loading...</Text>
-            <Image
-                source={require('../assets/splash.png')}
-                onLoad={_loadUserData}
-            />
         </View>
     )
 }

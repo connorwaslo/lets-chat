@@ -33,6 +33,8 @@ function RequestCard({ item }) {
                 status = (snapshot.val() && snapshot.val().status) || 'busy';
             })
             .catch(error => {
+                alert(error.message);
+
                 console.log('Error getting new friend status', error.message);
             });
 

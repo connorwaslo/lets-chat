@@ -6,9 +6,9 @@ import { useDispatch } from 'react-redux';
 import { setPhone } from '../../redux/actions/actions';
 
 function LogIn({ navigation }) {
-    const [email, setEmail] = useState('');
-    const [phone, setPhoneNum] = useState('');
-    const [pass, setPass] = useState('');
+    const [email, setEmail] = useState('connorwaslo29@gmail.com');
+    const [phone, setPhoneNum] = useState('+16026514181');
+    const [pass, setPass] = useState('password');
     const dispatch = useDispatch();
 
     function handleLogIn() {
@@ -56,6 +56,13 @@ function LogIn({ navigation }) {
             <TouchableOpacity onPress={handleLogIn}>
                 <View style={{ marginHorizontal: 5, marginVertical: 10, padding: 10, backgroundColor: 'lightblue' }}>
                     <Text style={{ textAlign: 'center' }}>Log In</Text>
+                </View>
+            </TouchableOpacity>
+
+            <Text style={{ textAlign: 'center' }}>Don't have an account?</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Sign Up')}>
+                <View style={{ marginHorizontal: 5, marginVertical: 10, padding: 10, backgroundColor: 'lightblue' }}>
+                    <Text style={{ textAlign: 'center' }}>Sign Up</Text>
                 </View>
             </TouchableOpacity>
         </SafeAreaView>

@@ -120,13 +120,6 @@ function SignUp({ navigation }) {
                     <Text style={{ textAlign: 'center' }}>Sign Up</Text>
                 </View>
             </TouchableOpacity>
-
-            <Text style={{ textAlign: 'center' }}>Already have an account?</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Log In')}>
-                <View style={{ marginHorizontal: 5, marginVertical: 10, padding: 10, backgroundColor: 'lightblue' }}>
-                    <Text style={{ textAlign: 'center' }}>Log In</Text>
-                </View>
-            </TouchableOpacity>
         </SafeAreaView>
     )
 }
