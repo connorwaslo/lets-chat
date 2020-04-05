@@ -78,6 +78,9 @@ function RequestCard({ item }) {
                                             .set(outgoing)
                                             .catch(error => console.log('Could not remove from outgoing', error.message));
                                     })
+                                    .catch(error => {
+                                        console.log('Accept, remove outgoing error:', error.message);
+                                    })
                             })
 
                         // Set their list with new phone number too
@@ -99,8 +102,20 @@ function RequestCard({ item }) {
 
         // Remove that request from firebase
         firebase.database().ref(phone + '/incomingRequests').set(newRequests)
+            .then(() => {
+                // Remove other friend's outgoing Requests too
+                firebase.database().ref(phoneNumber + '/outgoingRequests').once('value')
+                    .then(snapshot => {
+                        let outgoing = snapshot.val();
+                        outgoing = outgoing.filter(req => req !== phone);
+
+                        firebase.database().ref(phoneNumber + '/outgoingRequests')
+                            .set(outgoing)
+                            .catch(error => console.log('Could not remove from outgoing', error.message));
+                    })
+            })
             .catch(error => {
-                console.log('Could not set incomingRequests on friend accept', error.message);
+                console.log('Could not set incomingRequests on friend deny', error.message);
             });
     }
 
