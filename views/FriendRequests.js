@@ -12,11 +12,15 @@ function FriendRequests({ navigation }) {
         contacts: state.contacts
     }));
 
+    useEffect(() => {
+        console.log('Incoming:', incomingRequests);
+    }, []);
+
     if (requests.length > 0 && !incomingRequests) {
         setRequests([]);
     }
 
-    if (incomingRequests == null) {
+    if (incomingRequests.length === 0) {
         return (
             <DrawerHeader navigation={navigation} title='Friend Requests'>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

@@ -44,7 +44,6 @@ function ContactCard({ userInfo }) {
                 firebase.database().ref(path).once('value')
                     .then(snapshot => {
                         let incReqs = snapshot.val();
-                        console.log('Incoming Requests:', incReqs);
                         if (!incReqs) {
                             firebase.database().ref(path).set([
                                 phone

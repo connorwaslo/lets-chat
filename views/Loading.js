@@ -60,8 +60,6 @@ function Loading() {
                 let outgoingRequests = (snapshot.val() && snapshot.val().outgoingRequests) || [];
                 let friends = (snapshot.val() && snapshot.val().friends) || [];
 
-                console.log('Firebase friends:', friends);
-
                 // Convert friends from phone numbers to full contacts
                 // This only adds friends that can be found in your contacts
                 let friendContacts = [];
@@ -99,7 +97,6 @@ function Loading() {
     }
 
     async function _getFriends() {
-        console.log('allFriends', allFriends);
         let updatedFriends = [];
         allFriends.forEach(async friend => {
             let phone = friend.phone;
@@ -116,11 +113,9 @@ function Loading() {
                         phone: phone
                     };
 
-                    console.log('newFriend:', newFriend);
                     updatedFriends.push(newFriend);
 
                     // Just update redux every iteration
-                    console.log('Updated friends:', updatedFriends);
                     dispatch(setFriends(updatedFriends));
                 })
                 .catch(error => {
