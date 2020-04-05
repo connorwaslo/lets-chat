@@ -12,7 +12,7 @@ function Status({ navigation }) {
 
     function handleSubmit() {
         // Todo: Pull phone number from redux
-        firebase.database().ref('+16025554181/profile').update({
+        firebase.database().ref(phone + '/profile').update({
             status: selected
         }).then(() => {
             navigation.navigate('Loading');

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FlatList } from 'react-native';
 import FriendCard from '../components/FriendCard';
 import { useSelector } from 'react-redux';

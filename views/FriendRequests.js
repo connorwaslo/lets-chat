@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DrawerHeader from '../components/DrawerHeader';
 import { useSelector } from 'react-redux';
 import { FlatList, View, Text } from 'react-native';
@@ -44,7 +44,7 @@ function FriendRequests({ navigation }) {
                     curRequests.push({
                         name: contact.name,
                         status: contact.status,
-                        phone: num
+                        phoneNumber: num
                     });
                     numbers = numbers.filter(item => item !== num); // Remove it from list
                 }
@@ -56,7 +56,7 @@ function FriendRequests({ navigation }) {
             curRequests.push({
                 name: 'Unknown',
                 status: 'Unknown',
-                phone: num
+                phoneNumber: num
             });
         });
         numbers = [];

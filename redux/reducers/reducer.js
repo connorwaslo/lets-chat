@@ -66,16 +66,15 @@ export function userReducer(state = initUserState, action) {
                 outgoingRequests: newReqs
             };
         case ADD_FRIEND:
-            // Todo: include full contact
+            // action.friend type = Object
+            // Note: I see how TypeScript is useful now...
             let newFriends = state.friends;
-            console.log('Init friends:', newFriends);
             newFriends.push(action.friend);
-            console.log('newFriends:', newFriends);
 
             let newIncReqs = state.incomingRequests;
-            // Todo: Change this filter depending on what action.friend is
+
             // Right now this compares phone numbers, but may have to use uid later
-            newIncReqs = newIncReqs.filter(req => req !== action.friend);
+            newIncReqs = newIncReqs.filter(req => req !== action.friend.phone);
             if (newIncReqs === null) {
                 newIncReqs = [];
             }
@@ -86,10 +85,9 @@ export function userReducer(state = initUserState, action) {
                 friends: newFriends
             };
         case DENY_FRIEND:
+            // action.phone type = Phone number string
             let incReqs = state.incomingRequests;
-            // Todo: Change this filter depending on what action.friend is
-            // Right now this compares phone numbers, but may have to use uid later
-            incReqs = incReqs.filter(req => req !== action.friend);
+            incReqs = incReqs.filter(req => req !== action.phone);
 
             return {
                 ...state,

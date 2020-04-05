@@ -9,10 +9,6 @@ function InviteContacts({ navigation }) {
         contacts: state.contacts
     }));
 
-    useEffect(() => {
-        console.log('Contacts:', contacts);
-    }, []);
-
     return (
         <DrawerHeader navigation={navigation} title='Invite Contacts'>
             <FlatList

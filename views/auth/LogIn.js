@@ -2,14 +2,21 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import { useDispatch } from 'react-redux';
+import { setPhone } from '../../redux/actions/actions';
 
 function LogIn({ navigation }) {
-    const [email, setEmail] = useState('');
-    const [pass, setPass] = useState('');
+    const [email, setEmail] = useState('test@gmail.com');
+    const [phone, setPhoneNum] = useState('+16233266838');
+    const [pass, setPass] = useState('password');
+    const dispatch = useDispatch();
 
     function handleLogIn() {
         firebase.auth().signInWithEmailAndPassword(email, pass)
             .then(() => {
+                // Pull profile data on login
+                dispatch(setPhone(phone));
+
                 navigation.navigate('Loading');
             })
             .catch(error => {
@@ -27,6 +34,14 @@ function LogIn({ navigation }) {
                 value={email}
                 keyboardType='email-address'
                 textContentType='emailAddress'
+                style={styles.textInput}
+            />
+            <TextInput
+                placeholder='Phone Number*'
+                onChangeText={text => setPhoneNum(text)}
+                value={phone}
+                keyboardType='phone-pad'
+                textContentType='telephoneNumber'
                 style={styles.textInput}
             />
             <TextInput

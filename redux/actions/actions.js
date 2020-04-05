@@ -51,7 +51,7 @@ export const addFriend = friend => ({
     friend
 });
 
-export const denyFriend = friend => ({
+export const denyFriend = phone => ({
     type: DENY_FRIEND,
-    friend
+    phone
 });
