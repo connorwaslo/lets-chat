@@ -1,10 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TouchableOpacity, Linking, View, Text, StyleSheet } from 'react-native';
-import DrawerHeader from './DrawerHeader';
+import { updateFriendStatus } from '../redux/actions/actions';
+import { useDispatch } from 'react-redux';
+import firebase from 'firebase/app';
+import 'firebase/database';
 
 function FriendCard({ userInfo }) {
     const { name, status } = userInfo;
-    const phone = userInfo.phone;  // Should replace +1 country code with 1
+    const phone = userInfo.phone;
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        firebase.database().ref(phone + '/profile').on('value', snapshot => {
+            let status = (snapshot.val() && snapshot.val().status) || 'error';
+
+            console.log(phone, '=', status);
+            dispatch(updateFriendStatus({
+                name: name,
+                phone: phone,
+                status: status
+            }));
+        });
+    }, []);
 
     return (
         <View style={styles.container}>

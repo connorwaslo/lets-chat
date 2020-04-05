@@ -12,10 +12,6 @@ function FriendRequests({ navigation }) {
         contacts: state.contacts
     }));
 
-    useEffect(() => {
-        console.log('Incoming:', incomingRequests);
-    }, []);
-
     if (requests.length > 0 && !incomingRequests) {
         setRequests([]);
     }

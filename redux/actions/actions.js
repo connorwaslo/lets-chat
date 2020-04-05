@@ -3,7 +3,14 @@ import {
     SET_NAME,
     SET_CONTACTS,
     SET_OUTGOING_REQUESTS,
-    ADD_OUTGOING_REQUEST, SET_INCOMING_REQUESTS, ADD_FRIEND, DENY_FRIEND, SET_FRIENDS, SET_PHONE, SET_STATUS
+    ADD_OUTGOING_REQUEST,
+    SET_INCOMING_REQUESTS,
+    ADD_FRIEND,
+    DENY_FRIEND,
+    SET_FRIENDS,
+    SET_PHONE,
+    SET_STATUS,
+    UPDATE_FRIEND_STATUS
 } from './actionTypes';
 
 export const setName = name => ({
@@ -54,4 +61,9 @@ export const addFriend = friend => ({
 export const denyFriend = phone => ({
     type: DENY_FRIEND,
     phone
+});
+
+export const updateFriendStatus = updatedFriend => ({
+    type: UPDATE_FRIEND_STATUS,
+    updatedFriend
 });

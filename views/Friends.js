@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FlatList } from 'react-native';
 import FriendCard from '../components/FriendCard';
 import { useSelector } from 'react-redux';
 import DrawerHeader from '../components/DrawerHeader';
+import 'firebase/database';
 
 function Friends({ navigation }) {
     const { friends } = useSelector(state => ({

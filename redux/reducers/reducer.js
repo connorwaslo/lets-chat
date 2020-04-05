@@ -7,7 +7,7 @@ import {
     SET_OUTGOING_REQUESTS,
     SET_INCOMING_REQUESTS,
     ADD_FRIEND,
-    DENY_FRIEND, SET_FRIENDS, SET_PHONE, SET_STATUS
+    DENY_FRIEND, SET_FRIENDS, SET_PHONE, SET_STATUS, UPDATE_FRIEND_STATUS
 } from '../actions/actionTypes';
 
 const initUserState = {
@@ -92,6 +92,22 @@ export function userReducer(state = initUserState, action) {
             return {
                 ...state,
                 incomingRequests: incReqs
+            };
+        case UPDATE_FRIEND_STATUS:
+            let curFriends = state.friends;
+            let newStatusFriends = [];
+            curFriends.forEach(friend => {
+                // If this is the friend to update
+                if (friend.phone === action.updatedFriend.phone) {
+                    newStatusFriends.push(action.updatedFriend);
+                } else {
+                    newStatusFriends.push(friend);
+                }
+            });
+
+            return {
+                ...state,
+                friends: newStatusFriends
             };
         default:
             return state;
