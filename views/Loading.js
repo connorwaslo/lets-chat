@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Image, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -13,16 +13,24 @@ import 'firebase/auth';
 import * as Contacts from 'expo-contacts';
 import * as RootNavigation from '../utils/RootNavigation';
 
-function Loading() {
+function Loading({ navigation }) {
+    const [loading, setLoading] = useState(true);
     const { phone } = useSelector(state => ({
         phone: state.phone
     }));
     const dispatch = useDispatch();
     let contacts = [];
-    let allFriends = [];
+    // let allFriends = [];
+
+    // When finally done loading, navigate away
+    if (!loading) {
+        navigation.navigate('App');
+    }
 
     useEffect(() => {
         _loadUserData();
+
+        return () => console.log('Unmounting');
     }, []);
 
     async function _getContacts() {
@@ -89,16 +97,20 @@ function Loading() {
                 dispatch(setName(name));
                 dispatch(setIncomingRequests(incomingRequests));
                 dispatch(setOutgoingRequests(outgoingRequests));
-                allFriends = friendContacts;
+                _getFriends(friendContacts).finally(() => {
+                    setLoading(false);
+                });
             })
             .catch(error => {
                 console.log('Could not load user data:', error.message);
             });
     }
 
-    async function _getFriends() {
+    async function _getFriends(allFriends) {
         let updatedFriends = [];
-        allFriends.forEach(async friend => {
+        // allFriends.forEach(async friend => {
+        for (let i = 0; i < allFriends.length; i++) {
+            let friend = allFriends[i];
             let phone = friend.phone;
 
             const prevLength = updatedFriends.length;
@@ -123,22 +135,21 @@ function Loading() {
                 });
 
             // Todo: not even sure if i need this but we'll leave it until I do better bug testing
-            if (prevLength === updatedFriends.length) {
+            /*if (prevLength === updatedFriends.length) {
                 updatedFriends.push({
                     name: friend.name,
                     status: 'unknown',
                     phone: friend.phone
                 });
-            }
-        });
+            }*/
+        }
+
+        console.log('Done getting friends');
     }
 
     async function _loadUserData() {
         await _getContacts();
         await _getFirebase();
-        await _getFriends();
-
-        RootNavigation.navigate('App');
     }
 
     return (

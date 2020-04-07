@@ -18,44 +18,52 @@ function Friends({ navigation }) {
     useEffect(() => {
         firebase.database().ref(phone + '/friends').on('value', snapshot => {
             let dbFriends = snapshot.val() || [];
+            // console.log('Friends:', friends);
             let friendNums = friends.map(friend => friend.phone);
-            let friendContacts = friends;
 
-            // Get dbFriends - friendNums
-            // Expect the length to be 1
-            let newFriends = dbFriends.filter(num => !friendNums.includes(num));
-            let addFriend = {};
+            // console.log(dbFriends.length, friendNums.length);
+            if (dbFriends.length !== friendNums) {
+                let friendContacts = friends;
 
-            // Get contact for new friend
-            contacts.forEach(contact => {
-                contact.phoneNumbers.forEach(num => {
-                    if (newFriends.includes(num)) {
-                        addFriend.name = contact.name;
-                        addFriend.phone = num;
+                // Get dbFriends - friendNums
+                // Expect the length to be 1
+                let newFriends = dbFriends.filter(num => !friendNums.includes(num));
+                if (newFriends.length === 0) {
+                    console.log('No new friends...');
+                    return;
+                }
 
-                        newFriends = newFriends.filter(indiv => indiv !== num);
-                    }
-                })
-            });
+                let addFriend = {};
 
-            // If for whatever reason there are remaining numbers in newFriends...
-            if (newFriends.length > 0) {
-                addFriend.name = 'Not a Contact';
-                addFriend.phone = newFriends[0];
+                // Get contact for new friend
+                contacts.forEach(contact => {
+                    contact.phoneNumbers.forEach(num => {
+                        if (newFriends.includes(num)) {
+                            addFriend.name = contact.name;
+                            addFriend.phone = num;
+
+                            newFriends = newFriends.filter(indiv => indiv !== num);
+                        }
+                    })
+                });
+
+                // If for whatever reason there are remaining numbers in newFriends...
+                if (newFriends.length > 0) {
+                    addFriend.name = 'Not a Contact';
+                    addFriend.phone = newFriends[0];
+                }
+
+                // Get status for this phone number
+                firebase.database().ref(addFriend.phone + '/profile').once('value')
+                    .then(snapshot => {
+                        addFriend.status = (snapshot.val() && snapshot.val().status) || 'error';
+                        friendContacts.push(addFriend);
+
+                        dispatch(setFriends(friendContacts));
+                    })
             }
-
-            // Get status for this phone number
-            firebase.database().ref(addFriend.phone + '/profile').once('value')
-                .then(snapshot => {
-                    addFriend.status = (snapshot.val() && snapshot.val().status) || 'error';
-                    friendContacts.push(addFriend);
-
-                    dispatch(setFriends(friendContacts));
-                })
         });
     }, []);
-
-    console.log(friends);
 
     return (
         <DrawerHeader navigation={navigation} title='Friends'>
