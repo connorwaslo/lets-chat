@@ -35,7 +35,7 @@ export function userReducer(state = initUserState, action) {
         case SET_STATUS:
             return {
                 ...state,
-                phone: action.status
+                status: action.status
             };
         case SET_OUTGOING_REQUESTS:
             return {

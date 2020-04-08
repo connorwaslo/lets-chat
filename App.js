@@ -15,20 +15,6 @@ firebase.initializeApp(config);
 const store = createStore(userReducer);
 
 export default function App() {
-    const [loading, setLoading] = useState(true);
-    useEffect(() => {
-        (async () => {
-            await Font.loadAsync({
-                Roboto: require('native-base/Fonts/Roboto.ttf'),
-                Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
-                ...Ionicons.font,
-            });
-        })();
-        setLoading(false);
-    }, [setLoading]);
-
-    if (loading) return <AppLoading/>;
-
     return (
         <Provider store={store}>
             <AppContainer/>

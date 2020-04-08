@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, Text } from 'react-native';
+import { View, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     setContacts,
     setOutgoingRequests,
     setName,
-    setIncomingRequests, setFriends
+    setIncomingRequests, setFriends, setStatus
 } from '../redux/actions/actions';
 import firebase from 'firebase/app';
 import 'firebase/database';
 import 'firebase/auth';
 import * as Contacts from 'expo-contacts';
-import * as RootNavigation from '../utils/RootNavigation';
 
 function Loading({ navigation }) {
     const [loading, setLoading] = useState(true);
@@ -20,7 +19,6 @@ function Loading({ navigation }) {
     }));
     const dispatch = useDispatch();
     let contacts = [];
-    // let allFriends = [];
 
     // When finally done loading, navigate away
     if (!loading) {
@@ -28,6 +26,7 @@ function Loading({ navigation }) {
     }
 
     useEffect(() => {
+        console.log('Phone:', phone);
         _loadUserData();
 
         return () => console.log('Unmounting');
@@ -64,6 +63,7 @@ function Loading({ navigation }) {
         await firebase.database().ref(phone).once('value')
             .then(snapshot => {
                 let name = (snapshot.val() && snapshot.val().profile.name) || 'No Name';
+                let status = (snapshot.val() && snapshot.val().profile.status) || 'busy';
                 let incomingRequests = (snapshot.val() && snapshot.val().incomingRequests) || [];
                 let outgoingRequests = (snapshot.val() && snapshot.val().outgoingRequests) || [];
                 let friends = (snapshot.val() && snapshot.val().friends) || [];
@@ -95,6 +95,7 @@ function Loading({ navigation }) {
                 });
 
                 dispatch(setName(name));
+                dispatch(setStatus(status));
                 dispatch(setIncomingRequests(incomingRequests));
                 dispatch(setOutgoingRequests(outgoingRequests));
                 _getFriends(friendContacts).finally(() => {

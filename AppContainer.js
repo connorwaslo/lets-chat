@@ -12,6 +12,7 @@ import SignUp from './views/auth/SignUp';
 import LogIn from './views/auth/LogIn';
 import Status from './views/auth/Status';
 import { Ionicons } from '@expo/vector-icons';
+import Profile from './views/Profile';
 
 function AppContainer() {
     const Stack = createStackNavigator();
@@ -45,6 +46,10 @@ function AppContainer() {
                     name='Friend Requests'
                     component={FriendRequests}
                     options={{ drawerIcon: ({ focused, color, size }) => <Ionicons color={color} size={size} name='ios-paper-plane'/>}}/>
+                <Drawer.Screen
+                    name='Profile'
+                    component={Profile}
+                    options={{ drawerIcon: ({ focused, color, size }) => <Ionicons color={color} size={size} name='ios-contact'/>}}/>
             </Drawer.Navigator>
         )
     }
