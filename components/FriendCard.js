@@ -12,13 +12,15 @@ function FriendCard({ userInfo }) {
 
     useEffect(() => {
         let friendListener = firebase.database().ref(phone + '/profile').on('value', snapshot => {
-            let status = (snapshot.val() && snapshot.val().status) || 'error';
+            if (snapshot) {
+                let status = (snapshot.val() && snapshot.val().status) || 'error';
 
-            dispatch(updateFriendStatus({
-                name: name,
-                phone: phone,
-                status: status
-            }));
+                dispatch(updateFriendStatus({
+                    name: name,
+                    phone: phone,
+                    status: status
+                }));
+            }
         });
 
         return () => {

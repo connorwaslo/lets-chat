@@ -11,6 +11,7 @@ import firebase from 'firebase/app';
 import 'firebase/database';
 import 'firebase/auth';
 import * as Contacts from 'expo-contacts';
+import { CommonActions } from '@react-navigation/native';
 
 function Loading({ navigation }) {
     const [loading, setLoading] = useState(true);
@@ -22,11 +23,11 @@ function Loading({ navigation }) {
 
     // When finally done loading, navigate away
     if (!loading) {
+        // navigation.dispatch(navAction);
         navigation.navigate('App');
     }
 
     useEffect(() => {
-        console.log('Phone:', phone);
         _loadUserData();
 
         return () => console.log('Unmounting');
@@ -119,7 +120,6 @@ function Loading({ navigation }) {
             let friend = allFriends[i];
             let phone = friend.phone;
 
-            const prevLength = updatedFriends.length;
             const path = phone + '/profile';
             await firebase.database().ref(path).once('value')
                 .then(snapshot => {
@@ -139,18 +139,7 @@ function Loading({ navigation }) {
                 .catch(error => {
                     console.log('Could not find friend', phone, error.message);
                 });
-
-            // Todo: not even sure if i need this but we'll leave it until I do better bug testing
-            /*if (prevLength === updatedFriends.length) {
-                updatedFriends.push({
-                    name: friend.name,
-                    status: 'unknown',
-                    phone: friend.phone
-                });
-            }*/
         }
-
-        console.log('Done getting friends');
     }
 
     async function _loadUserData() {

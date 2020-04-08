@@ -20,9 +20,11 @@ function FriendRequests({ navigation }) {
     useEffect(() => {
         // console.log('Incoming Requests:', incomingRequests);
         let requestsListener = firebase.database().ref(phone + '/incomingRequests').on('value', snapshot => {
-            let incoming = snapshot.val() || [];
+            if (snapshot) {
+                let incoming = snapshot.val() || [];
 
-            dispatch(setIncomingRequests(incoming));
+                dispatch(setIncomingRequests(incoming));
+            }
         });
 
         return () => {
