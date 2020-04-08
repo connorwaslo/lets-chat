@@ -16,7 +16,7 @@ function Friends({ navigation }) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        firebase.database().ref(phone + '/friends').on('value', snapshot => {
+        let friendsListener = firebase.database().ref(phone + '/friends').on('value', snapshot => {
             let dbFriends = snapshot.val() || [];
             // console.log('Friends:', friends);
             let friendNums = friends.map(friend => friend.phone);
@@ -63,6 +63,11 @@ function Friends({ navigation }) {
                     })
             }
         });
+
+        return () => {
+            // Unsubscribe
+            friendsListener();
+        }
     }, []);
 
     return (

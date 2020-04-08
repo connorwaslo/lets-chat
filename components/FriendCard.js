@@ -11,7 +11,7 @@ function FriendCard({ userInfo }) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        firebase.database().ref(phone + '/profile').on('value', snapshot => {
+        let friendListener = firebase.database().ref(phone + '/profile').on('value', snapshot => {
             let status = (snapshot.val() && snapshot.val().status) || 'error';
 
             dispatch(updateFriendStatus({
@@ -20,6 +20,11 @@ function FriendCard({ userInfo }) {
                 status: status
             }));
         });
+
+        return () => {
+            // Unsubscribe from friendListener on unmount
+            friendListener();
+        };
     }, []);
 
     return (

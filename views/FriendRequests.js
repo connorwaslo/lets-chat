@@ -19,11 +19,16 @@ function FriendRequests({ navigation }) {
 
     useEffect(() => {
         // console.log('Incoming Requests:', incomingRequests);
-        firebase.database().ref(phone + '/incomingRequests').on('value', snapshot => {
+        let requestsListener = firebase.database().ref(phone + '/incomingRequests').on('value', snapshot => {
             let incoming = snapshot.val() || [];
 
             dispatch(setIncomingRequests(incoming));
-        })
+        });
+
+        return () => {
+            // Unsubscribe from friend requests listener
+            requestsListener();
+        }
     }, []);
 
     if (requests.length > 0 && !incomingRequests) {
