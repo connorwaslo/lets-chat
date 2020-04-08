@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { SafeAreaView, View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import firebase from 'firebase/app';
+import 'firebase/database';
 import 'firebase/auth';
 import { useDispatch } from 'react-redux';
 import { setName, setPhone } from '../../redux/actions/actions';
@@ -50,12 +51,13 @@ function SignUp({ navigation }) {
             if (result) {
                 firebase.auth().createUserWithEmailAndPassword(email, pass)
                     .then(() => {
+                        const uid = firebase.auth().currentUser.uid;
                         // Store profile data in Firebase
                         firebase.database().ref(phone + '/profile').set({
                             name: name
                         }).then(() => {
                             // Save phone number as created account
-                            firebase.database().ref('accounts/').push({
+                            firebase.database().ref('accounts/' + uid).set({
                                 [phone]: true
                             }).then(() => {
                                 // Save data in redux
