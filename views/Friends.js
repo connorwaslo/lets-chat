@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import DrawerHeader from '../components/DrawerHeader';
 import firebase from 'firebase/app';
 import 'firebase/database';
-import { setFriends } from '../redux/actions/actions';
+import { setContacts, setFriends } from '../redux/actions/actions';
 
 function Friends({ navigation }) {
     const { phone, friends, contacts } = useSelector(state => ({
@@ -35,6 +35,10 @@ function Friends({ navigation }) {
 
                 let addFriend = {};
 
+                // Store contacts that do not include new friend
+                // This is so that when accepting a friend request it removes that friend from the "invite" view
+                let updatedContacts = contacts;
+
                 // Get contact for new friend
                 contacts.forEach(contact => {
                     contact.phoneNumbers.forEach(num => {
@@ -43,9 +47,13 @@ function Friends({ navigation }) {
                             addFriend.phone = num;
 
                             newFriends = newFriends.filter(indiv => indiv !== num);
+                            updatedContacts = updatedContacts.filter(contact => !contact.phoneNumbers.includes(num));
                         }
                     })
                 });
+
+                // Remove friend from contacts listed in "Invite" view
+                dispatch(setContacts(updatedContacts));
 
                 // If for whatever reason there are remaining numbers in newFriends...
                 if (newFriends.length > 0) {
