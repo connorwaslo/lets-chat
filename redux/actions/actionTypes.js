@@ -1,3 +1,5 @@
+export const RESET_APP = 'RESET_APP';
+
 export const SET_NAME = 'SET_NAME';
 export const SET_PHONE = 'SET_PHONE';
 export const SET_STATUS = 'SET_STATUS';

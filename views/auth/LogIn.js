@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setPhone } from '../../redux/actions/actions';
 
 function LogIn({ navigation }) {
     const [email, setEmail] = useState('connorwaslo29@gmail.com');
     const [phone, setPhoneNum] = useState('+16026514181');
     const [pass, setPass] = useState('password');
+    const { name, status } = useSelector(state => ({
+        name: state.name,
+        status: state.status
+    }));
     const dispatch = useDispatch();
 
     function handleLogIn() {
@@ -17,6 +21,7 @@ function LogIn({ navigation }) {
                 // Pull profile data on login
                 dispatch(setPhone(phone));
 
+                // Todo: May consider resetting state for this component so it's blank on sign out
                 navigation.navigate('Loading');
             })
             .catch(error => {

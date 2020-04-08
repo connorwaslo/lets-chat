@@ -7,7 +7,7 @@ import {
     SET_OUTGOING_REQUESTS,
     SET_INCOMING_REQUESTS,
     ADD_FRIEND,
-    DENY_FRIEND, SET_FRIENDS, SET_PHONE, SET_STATUS, UPDATE_FRIEND_STATUS
+    DENY_FRIEND, SET_FRIENDS, SET_PHONE, SET_STATUS, UPDATE_FRIEND_STATUS, RESET_APP
 } from '../actions/actionTypes';
 
 const initUserState = {
@@ -22,6 +22,8 @@ const initUserState = {
 
 export function userReducer(state = initUserState, action) {
     switch (action.type) {
+        case RESET_APP:
+            return initUserState;
         case SET_NAME:
             return {
                 ...state,

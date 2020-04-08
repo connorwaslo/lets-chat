@@ -10,8 +10,12 @@ import {
     SET_FRIENDS,
     SET_PHONE,
     SET_STATUS,
-    UPDATE_FRIEND_STATUS
+    UPDATE_FRIEND_STATUS, RESET_APP
 } from './actionTypes';
+
+export const resetApp = () => ({
+    type: RESET_APP
+});
 
 export const setName = name => ({
     type: SET_NAME,

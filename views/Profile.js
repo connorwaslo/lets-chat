@@ -2,10 +2,11 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Button } from 'galio-framework';
 import { useDispatch, useSelector } from 'react-redux';
-import { setStatus } from '../redux/actions/actions';
+import { resetApp, setStatus } from '../redux/actions/actions';
 import DrawerHeader from '../components/DrawerHeader';
 import firebase from 'firebase/app';
 import 'firebase/database';
+import 'firebase/auth';
 
 function Profile({ navigation }) {
     const { name, phone, status } = useSelector(state => ({
@@ -29,6 +30,18 @@ function Profile({ navigation }) {
         }
     }
 
+    function handleSignout() {
+        dispatch(resetApp());
+
+        firebase.auth().signOut().then(() => {
+            navigation.navigate('Log In');
+        }).catch(error => {
+            alert('Could not sign you out ' + error.message);
+
+            console.log('Could not sign user out', error.message);
+        })
+    }
+
     return (
         <DrawerHeader navigation={navigation} title={name}>
             <Text style={styles.header}>Phone Number</Text>
@@ -48,6 +61,14 @@ function Profile({ navigation }) {
                     shadowless
                     onPress={() => setUserStatus('busy')}
                     style={styles.statusButton}>Busy</Button>
+            </View>
+            <View style={{ justifyContent: 'flex-end', alignItems: 'center' }}>
+                <Button
+                    round uppercase color='error' shadowless
+                    onPress={handleSignout}
+                >
+                    Sign Out
+                </Button>
             </View>
         </DrawerHeader>
     )
