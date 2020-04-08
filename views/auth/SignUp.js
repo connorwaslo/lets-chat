@@ -58,7 +58,7 @@ function SignUp({ navigation }) {
                         }).then(() => {
                             // Save phone number as created account
                             firebase.database().ref('accounts/' + uid).set({
-                                [phone]: true
+                                phone: phone
                             }).then(() => {
                                 // Save data in redux
                                 dispatch(setName(name));
