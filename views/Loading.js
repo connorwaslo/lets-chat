@@ -68,6 +68,8 @@ function Loading({ navigation }) {
                 let outgoingRequests = (snapshot.val() && snapshot.val().outgoingRequests) || [];
                 let friends = (snapshot.val() && snapshot.val().friends) || [];
 
+                let updatedContacts = contacts;
+
                 // Convert friends from phone numbers to full contacts
                 // This only adds friends that can be found in your contacts
                 let friendContacts = [];
@@ -81,6 +83,7 @@ function Loading({ navigation }) {
                             });
 
                             friends = friends.filter(indiv => indiv !== num);
+                            updatedContacts = updatedContacts.filter(contact => !contact.phoneNumbers.includes(num));
                         }
                     })
                 });
@@ -93,6 +96,8 @@ function Loading({ navigation }) {
                         phone: num
                     });
                 });
+
+                dispatch(setContacts(updatedContacts));
 
                 dispatch(setName(name));
                 dispatch(setStatus(status));
