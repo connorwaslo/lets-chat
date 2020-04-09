@@ -5,7 +5,7 @@ import { data } from '../data/countries';
 
 const defaultCountry = data.filter(obj => obj.name === 'United States')[0];
 
-function PhoneInput({ onChangeText }) {
+function PhoneInput({ onChangeText, setCountryCode }) {
     const [country, setCountry] = useState(defaultCountry);
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -27,7 +27,7 @@ function PhoneInput({ onChangeText }) {
             )[0];
 
             setCountry(curCountry);
-            console.log(curCountry.dial_code);
+            setCountryCode(curCountry.dial_code);
             await hideModal();
         } catch (err) {
             console.log('Error pressing country:', err);
@@ -35,7 +35,7 @@ function PhoneInput({ onChangeText }) {
     }
 
     function handleChangeText(text) {
-        onChangeText(country.dial_code + text);
+        onChangeText(text);
     }
 
     return (
@@ -46,7 +46,7 @@ function PhoneInput({ onChangeText }) {
             <Layout style={{ flex: 8 }}>
                 <Input
                     placeholder='1234567890'
-                    type='phone-pad'
+                    keyboardType='phone-pad'
                     onChangeText={text => handleChangeText(text)}/>
 
                 <Modal animationType='slide' transparent={false} visible={modalVisible}>

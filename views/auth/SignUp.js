@@ -10,6 +10,7 @@ import PhoneInput from '../../components/PhoneInput';
 function SignUp({ navigation }) {
     const [name, setNameState] = useState('');
     const [email, setEmail] = useState('');
+    const [countryCode, setCountryCode] = useState('+1');
     const [phone, setPhoneNum] = useState('');
     const [pass, setPass] = useState('');
     const dispatch = useDispatch();
@@ -17,22 +18,29 @@ function SignUp({ navigation }) {
     // Make sure that the user's information is valid and unique
     async function validateAccount() {
         let validPassword = true;
-        let validPhoneNum = true;
+        let validPhoneNum = () => {
+            // Assume that country code is accurate because choices are given to user
+            // All digits. 10 Digits.
+            let isNum = /^\d+$/.test(phone);
+            return isNum && phone.length === 10;
+        };
+        let phoneExists = false;
 
         // See if phone number exists in firebase
+        const fullPhone = countryCode + phone;
         await firebase.database().ref('accounts/').once('value')
             .then(snapshot => {
                 let allAccounts = snapshot.val();
                 if (!allAccounts) {
-                    validPhoneNum = true;
+                    phoneExists = false;
                 } else {
                     for (const item in allAccounts) {
                         let existingNum = Object.keys(allAccounts[item])[0];
 
                         // Check and see if the phone numbers match
-                        if (phone === existingNum) {
+                        if (fullPhone === existingNum) {
                             alert('This phone number is already in use.');
-                            validPhoneNum = false;
+                            phoneExists = true;
                             break;
                         }
                     }
@@ -44,26 +52,27 @@ function SignUp({ navigation }) {
                 console.log('Could not validate phone number', error.message);
             });
 
-        return validPassword && validPhoneNum;
+        return validPassword && validPhoneNum && !phoneExists;
     }
 
     function handleSignUp() {
+        const fullPhone = countryCode + phone;
         validateAccount().then(result => {
             if (result) {
                 firebase.auth().createUserWithEmailAndPassword(email, pass)
                     .then(() => {
                         const uid = firebase.auth().currentUser.uid;
                         // Store profile data in Firebase
-                        firebase.database().ref(phone + '/profile').set({
+                        firebase.database().ref(fullPhone + '/profile').set({
                             name: name
                         }).then(() => {
                             // Save phone number as created account
                             firebase.database().ref('accounts/' + uid).set({
-                                phone: phone
+                                fullPhone: fullPhone
                             }).then(() => {
                                 // Save data in redux
                                 dispatch(setName(name));
-                                dispatch(setPhone(phone));
+                                dispatch(setPhone(fullPhone));
 
                                 navigation.navigate('Status');
                             }).catch(error => {
@@ -102,15 +111,7 @@ function SignUp({ navigation }) {
                 textContentType='emailAddress'
                 style={styles.textInput}
             />
-            <PhoneInput onChangeText={setPhoneNum}/>
-            <TextInput
-                placeholder='Phone Number*'
-                onChangeText={text => setPhoneNum(text)}
-                value={phone}
-                keyboardType='phone-pad'
-                textContentType='telephoneNumber'
-                style={styles.textInput}
-            />
+            <PhoneInput onChangeText={setPhoneNum} setCountryCode={setCountryCode}/>
             <TextInput
                 placeholder='Password*'
                 onChangeText={text => setPass(text)}
