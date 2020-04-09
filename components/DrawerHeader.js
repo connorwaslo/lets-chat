@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 function DrawerHeader({ navigation, title, children }) {
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
             <View style={{ position: 'absolute', left: 10, right: 10, top: 55}}>
                 <Text style={{ textAlign: 'center', fontSize: 24, color: 'black' }}>
                     {title}

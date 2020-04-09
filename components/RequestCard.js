@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Text, Button, Card } from '@ui-kitten/components';
 import firebase from 'firebase/app';
 import 'firebase/database';
 import { useDispatch, useSelector } from 'react-redux';
@@ -131,20 +132,23 @@ function RequestCard({ item }) {
     }
 
     return (
-        <View style={{ flex: 1, backgroundColor: 'lightblue', padding: 10, margin: 5 }}>
-            <Text style={{ textAlign: 'center', fontSize: 18 }}>{name}  |  {phoneNumber}</Text>
-            <TouchableOpacity onPress={handleAccept}>
-                <View style={{ padding: 10, marginVertical: 5, backgroundColor: 'lightgreen' }}>
-                    <Text style={{ textAlign: 'center' }}>Accept</Text>
-                </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={handleDeny}>
-                <View style={{ padding: 10, marginVertical: 5, backgroundColor: 'red' }}>
-                    <Text style={{ textAlign: 'center' }}>Deny</Text>
-                </View>
-            </TouchableOpacity>
-        </View>
+        <Card status='primary' style={{ flex: 1, padding: 10, margin: 5 }}>
+            <Text category='h2' style={{ textAlign: 'center' }}>{name}</Text>
+            <Text category='h6' style={{ textAlign: 'center' }}>{phoneNumber}</Text>
+            <Button status='success' onPress={handleAccept} style={styles.button}>
+                Accept
+            </Button>
+            <Button status='danger' onPress={handleDeny} style={styles.button}>
+                Deny
+            </Button>
+        </Card>
     )
 }
+
+const styles = StyleSheet.create({
+    button: {
+        marginVertical: 5
+    }
+});
 
 export default RequestCard;
