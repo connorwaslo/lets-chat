@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { TouchableOpacity, Linking, View, Text, StyleSheet } from 'react-native';
+import { Layout, Button } from '@ui-kitten/components';
 import { updateFriendStatus } from '../redux/actions/actions';
 import { useDispatch } from 'react-redux';
 import firebase from 'firebase/app';
@@ -29,18 +30,31 @@ function FriendCard({ userInfo }) {
         };
     }, []);
 
+    function renderButton() {
+        if (status === 'ready') {
+            return (
+                <Button status='primary' onPress={() => Linking.openURL(`facetime:${phone}`)} style={styles.button}>
+                    Call
+                </Button>
+            )
+        }
+
+        // Todo: Open Modal asking if you're sure you want to call them
+        return (
+            <Button status='warning' onPress={() => {}} style={styles.button}>
+                Busy
+            </Button>
+        )
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.left}>
                 <Text style={styles.contact}>{name}</Text>
             </View>
-            <View style={styles.right}>
-                <TouchableOpacity onPress={() => Linking.openURL(`facetime:${phone}`)}>
-                    <View style={status === 'ready' ? styles.readyButton : styles.busyButton}>
-                        <Text>Call</Text>
-                    </View>
-                </TouchableOpacity>
-            </View>
+            <Layout style={styles.right}>
+                {renderButton()}
+            </Layout>
         </View>
     )
 }
@@ -63,24 +77,16 @@ const styles = StyleSheet.create({
     right: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        backgroundColor: 'transparent'
     },
     contact: {
         paddingLeft: 10,
         fontSize: 22
     },
-    readyButton: {
-        marginRight: 10,
-        padding: 15,
-        backgroundColor: '#60d688',
-        borderRadius: 10
-    },
-    busyButton: {
-        marginRight: 10,
-        padding: 15,
-        backgroundColor: '#FF7B2E',
-        borderRadius: 10
+    button: {
+        width: '50%'
     }
-})
+});
 
 export default FriendCard;
