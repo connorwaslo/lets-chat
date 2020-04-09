@@ -1,12 +1,13 @@
 import React from 'react';
-import { SafeAreaView, View, TouchableOpacity, Text } from 'react-native';
+import { SafeAreaView, View, TouchableOpacity } from 'react-native';
+import { Text } from '@ui-kitten/components';
 import { Ionicons } from '@expo/vector-icons';
 
 function DrawerHeader({ navigation, title, children }) {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
             <View style={{ position: 'absolute', left: 10, right: 10, top: 55}}>
-                <Text style={{ textAlign: 'center', fontSize: 24, color: 'black' }}>
+                <Text category='h4' style={{ textAlign: 'center', color: 'black' }}>
                     {title}
                 </Text>
             </View>
