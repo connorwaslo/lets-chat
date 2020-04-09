@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { TouchableOpacity, Linking, View, Text, StyleSheet } from 'react-native';
-import { Layout, Button } from '@ui-kitten/components';
+import { Linking, View, StyleSheet } from 'react-native';
+import { Layout, Button, Card, Text } from '@ui-kitten/components';
 import { updateFriendStatus } from '../redux/actions/actions';
 import { useDispatch } from 'react-redux';
 import firebase from 'firebase/app';
@@ -57,10 +57,10 @@ function FriendCard({ userInfo }) {
     }
 
     return (
-        <TouchableOpacity onPress={showInfoModal}>
+        <Card onPress={showInfoModal} style={{ padding: 0, margin: 5, backgroundColor: '#F2F2F2' }}>
             <View style={styles.container}>
                 <View style={styles.left}>
-                    <Text style={styles.contact}>{name}</Text>
+                    <Text category='h4' style={styles.contact}>{name}</Text>
                 </View>
                 <Layout style={styles.right}>
                     {renderButton()}
@@ -68,7 +68,7 @@ function FriendCard({ userInfo }) {
                 </Layout>
             </View>
             <FriendInfoModal visible={infoModalVisible} hideModal={hideInfoModal} name={name} phone={phone} status={status}/>
-        </TouchableOpacity>
+        </Card>
     )
 }
 
@@ -77,9 +77,8 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        margin: 5,
-        padding: 15,
-        backgroundColor: '#E0E0E0'
+        // margin: 5,
+        padding: 15
     },
     left: {
         flex: 1,
@@ -94,11 +93,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent'
     },
     contact: {
-        paddingLeft: 10,
-        fontSize: 22
+        paddingLeft: 10
     },
     button: {
-        width: '50%'
+        width: '50%',
+        height: '50%'
     }
 });
 
