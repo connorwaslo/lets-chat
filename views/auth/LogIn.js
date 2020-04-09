@@ -15,7 +15,6 @@ function LogIn({ navigation }) {
         firebase.auth().signInWithEmailAndPassword(email, pass)
             .then(() => {
                 const uid = firebase.auth().currentUser.uid;
-                console.log('Current user id:', uid);
 
                 // Get user phone number
                 firebase.database().ref('accounts/' + uid).once('value')
