@@ -95,6 +95,8 @@ function SignUp({ navigation }) {
         });
     }
 
+    console.log(countryCode, phone);
+
     return (
         <SafeAreaView>
             <TextInput

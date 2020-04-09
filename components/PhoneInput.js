@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, FlatList, TouchableOpacity } from 'react-native';
 import { Layout, Input, Button, Text } from '@ui-kitten/components';
 import { data } from '../data/countries';
+import CountrySelectModal from './modals/CountrySelectModal';
 
 const defaultCountry = data.filter(obj => obj.name === 'United States')[0];
 
@@ -18,7 +19,6 @@ function PhoneInput({ onChangeText, setCountryCode }) {
     };
 
     async function selectCountry(country) {
-        console.log('Change country');
         const countryData = await data;
 
         try {
@@ -43,39 +43,17 @@ function PhoneInput({ onChangeText, setCountryCode }) {
             <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} onTouchStart={showModal}>
                 <Text>{country.flag} {country.dial_code}</Text>
             </Layout>
-            <Layout style={{ flex: 8 }}>
+            <Layout style={{ flex: 7 }}>
                 <Input
                     placeholder='1234567890'
                     keyboardType='phone-pad'
                     onChangeText={text => handleChangeText(text)}/>
 
-                <Modal animationType='slide' transparent={false} visible={modalVisible}>
-                    <Layout style={{ flex: 1, marginTop: 50 }}>
-                        <Layout style={{ flex: 7 }}>
-                            <FlatList
-                                data={countryData}
-                                renderItem={({ item }) => (
-                                    <TouchableOpacity
-                                        onPress={() => selectCountry(item.name)}
-                                    >
-                                        <Layout
-                                            style={{ flex: 1, flexDirection: 'row', paddingVertical: 15, paddingHorizontal: 20,
-                                                marginHorizontal: 15, marginVertical: 5, borderColor: 'lightgrey',
-                                                borderWidth: 1, borderRadius: 4 }}>
-                                            <Text category='h6'>{item.flag} {item.name} ({item.dial_code})</Text>
-                                        </Layout>
-                                    </TouchableOpacity>
-                                )}
-                                keyExtractor={(item, index) => index.toString()}
-                            />
-                        </Layout>
-                        <Layout style={{ flex: 1, justifyContent: 'center' }}>
-                            <Button onPress={hideModal} status='danger'>
-                                Cancel
-                            </Button>
-                        </Layout>
-                    </Layout>
-                </Modal>
+                <CountrySelectModal
+                    visible={modalVisible}
+                    selectCountry={selectCountry}
+                    hideModal={hideModal}
+                />
             </Layout>
         </Layout>
     )
