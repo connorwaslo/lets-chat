@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, KeyboardAvoidingView } from 'react-native';
 import ContactCard from '../components/ContactCard';
 import { useSelector } from 'react-redux';
 import DrawerHeader from '../components/DrawerHeader';
-import { Input } from 'galio-framework';
+import { Input } from '@ui-kitten/components';
 
 function InviteContacts({ navigation }) {
     const [validContacts, setValidContacts] = useState([]);
@@ -24,9 +24,11 @@ function InviteContacts({ navigation }) {
 
     return (
         <DrawerHeader navigation={navigation} title='Invite Contacts'>
-            <View style={{ alignItems: 'center' }} style={{ paddingHorizontal: 5 }}>
-                <Input rounded placeholder='Search for contacts...' onChangeText={text => filterContacts(text)}
-                       right icon='search' family='Ionicons' iconSize={14} iconColor='black'/>
+            <View style={{ alignItems: 'center', paddingHorizontal: 5 }}>
+                <Input size='large'
+                       placeholder='Search for contacts...'
+                       autoCorrect={false}
+                       onChangeText={text => filterContacts(text)}/>
             </View>
             <FlatList
                 data={validContacts}

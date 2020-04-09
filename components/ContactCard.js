@@ -1,9 +1,10 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import firebase from 'firebase/app';
 import 'firebase/database';
 import { useDispatch, useSelector } from 'react-redux';
 import { addOutgoingRequest } from '../redux/actions/actions';
+import { Card, Text, Button } from '@ui-kitten/components';
 
 function ContactCard({ userInfo }) {
     const { name } = userInfo;
@@ -65,18 +66,13 @@ function ContactCard({ userInfo }) {
     }
 
     return (
-        <View style={styles.container}>
-            <View style={styles.left}>
-                <Text style={styles.contact}>{name}{'\n'}{phoneNum}</Text>
-            </View>
-            <View style={styles.right}>
-                <TouchableOpacity onPress={_handleInviteFriend}>
-                    <View style={styles.addButton}>
-                        <Text>+</Text>
-                    </View>
-                </TouchableOpacity>
-            </View>
-        </View>
+        <Card style={styles.container}>
+            <Text category='h6' style={styles.text}>{name}</Text>
+            <Text category='s1' style={styles.text}>{phoneNum}</Text>
+            <Button status='success' onPress={_handleInviteFriend} style={{ width: '100%', marginTop: 10 }}>
+                Invite
+            </Button>
+        </Card>
     )
 }
 
@@ -84,29 +80,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         margin: 5,
-        padding: 15,
-        backgroundColor: '#C9C9C9'
+        backgroundColor: '#F2F2F2'
     },
-    left: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'flex-start'
-    },
-    right: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'flex-end'
-    },
-    contact: {
-        paddingLeft: 10
-    },
-    addButton: {
-        marginRight: 10,
-        padding: 15,
-        backgroundColor: '#60d688',
-        borderRadius: 10
+    text: {
+        textAlign: 'center',
+        marginVertical: 5
     }
 });
 
