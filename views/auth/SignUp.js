@@ -5,6 +5,7 @@ import 'firebase/database';
 import 'firebase/auth';
 import { useDispatch } from 'react-redux';
 import { setName, setPhone } from '../../redux/actions/actions';
+import PhoneInput from '../../components/PhoneInput';
 
 function SignUp({ navigation }) {
     const [name, setNameState] = useState('');
@@ -101,6 +102,7 @@ function SignUp({ navigation }) {
                 textContentType='emailAddress'
                 style={styles.textInput}
             />
+            <PhoneInput onChangeText={setPhoneNum}/>
             <TextInput
                 placeholder='Phone Number*'
                 onChangeText={text => setPhoneNum(text)}

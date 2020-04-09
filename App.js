@@ -6,9 +6,8 @@ import config from './apis/firebase';
 import firebase from 'firebase/app';
 import 'firebase/database';
 import AppContainer from './AppContainer';
-import { Ionicons } from '@expo/vector-icons';
-import { AppLoading } from 'expo';
-import * as Font from 'expo-font';
+import { ApplicationProvider } from '@ui-kitten/components';
+import * as eva from '@eva-design/eva';
 
 firebase.initializeApp(config);
 
@@ -17,7 +16,9 @@ const store = createStore(userReducer);
 export default function App() {
     return (
         <Provider store={store}>
-            <AppContainer/>
+            <ApplicationProvider {...eva} theme={eva.light}>
+                <AppContainer/>
+            </ApplicationProvider>
         </Provider>
     );
 }
