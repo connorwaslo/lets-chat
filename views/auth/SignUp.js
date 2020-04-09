@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { SafeAreaView, View, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { Layout, Input, Text, Button } from '@ui-kitten/components';
 import firebase from 'firebase/app';
 import 'firebase/database';
 import 'firebase/auth';
@@ -95,38 +96,36 @@ function SignUp({ navigation }) {
         });
     }
 
-    console.log(countryCode, phone);
-
     return (
         <SafeAreaView>
-            <TextInput
-                placeholder='Name*'
-                onChangeText={text => setNameState(text)}
-                value={name}
-                style={styles.textInput}
-            />
-            <TextInput
-                placeholder='Email*'
-                onChangeText={text => setEmail(text)}
-                value={email}
-                keyboardType='email-address'
-                textContentType='emailAddress'
-                style={styles.textInput}
-            />
-            <PhoneInput onChangeText={setPhoneNum} setCountryCode={setCountryCode}/>
-            <TextInput
-                placeholder='Password*'
-                onChangeText={text => setPass(text)}
-                value={pass}
-                secureTextEntry={true}
-                textContentType='password'
-                style={styles.textInput}
-            />
-            <TouchableOpacity onPress={handleSignUp}>
-                <View style={{ marginHorizontal: 5, marginVertical: 10, padding: 10, backgroundColor: 'lightblue' }}>
-                    <Text style={{ textAlign: 'center' }}>Sign Up</Text>
-                </View>
-            </TouchableOpacity>
+            <Layout style={{ paddingTop: '20%', paddingHorizontal: 15 }}>
+                <Input
+                    label='Name'
+                    placeholder='Amy Adams'
+                    value={name}
+                    onChangeText={text => setNameState(text)}
+                    style={styles.margin}
+                />
+                <Input
+                    label='Email'
+                    placeholder='amy@adams.com'
+                    keyboardType='email-address'
+                    value={email}
+                    onChangeText={text => setEmail(text)}
+                    style={styles.margin}
+                />
+                <PhoneInput onChangeText={setPhoneNum} setCountryCode={setCountryCode}/>
+                <Input
+                    label='Password'
+                    placeholder='********'
+                    secureTextEntry={true}
+                    value={pass}
+                    onChangeText={text => setPass(text)}
+                    style={styles.margin}
+                />
+
+                <Button status='primary' onPress={handleSignUp} style={styles.margin}>Sign Up</Button>
+            </Layout>
         </SafeAreaView>
     )
 }
@@ -138,6 +137,9 @@ const styles = StyleSheet.create({
         marginVertical: 20,
         borderBottomWidth: 2,
         borderColor: 'darkgrey',
+    },
+    margin: {
+        marginVertical: 5
     }
 });
 

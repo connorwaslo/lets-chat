@@ -45,6 +45,7 @@ function PhoneInput({ onChangeText, setCountryCode }) {
             </Layout>
             <Layout style={{ flex: 7 }}>
                 <Input
+                    label='Phone Number'
                     placeholder='1234567890'
                     keyboardType='phone-pad'
                     onChangeText={text => handleChangeText(text)}/>

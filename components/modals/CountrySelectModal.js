@@ -27,7 +27,7 @@ function CountrySelectModal({ visible, selectCountry, hideModal }) {
                         keyboardShouldPersistTaps='always'
                     />
                 </Layout>
-                <Layout style={{ flex: 1, justifyContent: 'center' }}>
+                <Layout style={{ flex: 1, justifyContent: 'center', paddingHorizontal: 15 }}>
                     <Button onPress={hideModal} status='danger'>
                         Cancel
                     </Button>
