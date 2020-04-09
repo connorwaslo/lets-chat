@@ -22,11 +22,12 @@ function AppContainer() {
     function AuthStack() {
         return (
             <Stack.Navigator>
-                <Stack.Screen name='Log In' component={LogIn}/>
-                <Stack.Screen name='Sign Up' component={SignUp}/>
-                <Stack.Screen name='Status' component={Status}/>
+                <Stack.Screen name='Log In' component={LogIn} options={{cardStyle: { backgroundColor: '#FFF' }}}/>
+                <Stack.Screen name='Sign Up' component={SignUp} options={{cardStyle: { backgroundColor: '#FFF' }}}/>
+                <Stack.Screen name='Status' component={Status} options={{cardStyle: { backgroundColor: '#FFF' }}}/>
                 <Stack.Screen name='Loading' component={Loading}
-                              options={{ cardStack: { gesturesEnabled: false }, headerShown: false }}/>
+                              options={{ cardStack: { gesturesEnabled: false }, headerShown: false,
+                                         cardStyle: { backgroundColor: '#FFF' }}}/>
             </Stack.Navigator>
         )
     }
@@ -55,7 +56,7 @@ function AppContainer() {
     }
 
     return (
-        <NavigationContainer ref={navigationRef} style={styles.container}>
+        <NavigationContainer ref={navigationRef}>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name='Auth' component={AuthStack}/>
                 <Stack.Screen name='App' component={AppDrawer}/>
@@ -63,14 +64,5 @@ function AppContainer() {
         </NavigationContainer>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});
 
 export default AppContainer;

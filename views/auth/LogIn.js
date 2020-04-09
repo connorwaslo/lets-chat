@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, TextInput, SafeAreaView, StyleSheet, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { Layout, Input, Button, Text } from '@ui-kitten/components';
 import firebase from 'firebase/app';
 import 'firebase/database';
 import 'firebase/auth';
@@ -39,46 +40,41 @@ function LogIn({ navigation }) {
 
     return (
         <SafeAreaView>
-            <TextInput
-                placeholder='Email*'
-                onChangeText={text => setEmail(text)}
-                value={email}
-                keyboardType='email-address'
-                textContentType='emailAddress'
-                style={styles.textInput}
-            />
-            <TextInput
-                placeholder='Password*'
-                onChangeText={text => setPass(text)}
-                value={pass}
-                secureTextEntry={true}
-                textContentType='password'
-                style={styles.textInput}
-            />
+            <KeyboardAvoidingView>
+                <Layout style={{ paddingTop: '30%', paddingHorizontal: 15 }}>
+                    <Input
+                        label='Email'
+                        placeholder='leo@dicaprio.com'
+                        keyboardType='email-address'
+                        value={email}
+                        onChangeText={text => setEmail(text)}
+                        style={styles.margin}
+                    />
+                    <Input
+                        label='Password'
+                        placeholder='********'
+                        secureTextEntry={true}
+                        value={pass}
+                        onChangeText={text => setPass(text)}
+                        style={styles.margin}
+                    />
 
-            <TouchableOpacity onPress={handleLogIn}>
-                <View style={{ marginHorizontal: 5, marginVertical: 10, padding: 10, backgroundColor: 'lightblue' }}>
-                    <Text style={{ textAlign: 'center' }}>Log In</Text>
-                </View>
-            </TouchableOpacity>
+                    <Button status='primary' onPress={handleLogIn} style={styles.margin}>Log In</Button>
 
-            <Text style={{ textAlign: 'center' }}>Don't have an account?</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Sign Up')}>
-                <View style={{ marginHorizontal: 5, marginVertical: 10, padding: 10, backgroundColor: 'lightblue' }}>
-                    <Text style={{ textAlign: 'center' }}>Sign Up</Text>
-                </View>
-            </TouchableOpacity>
+                    <Text category='s1' style={{ textAlign: 'center', marginVertical: 20 }}>Don't have an account?</Text>
+
+                    <Button status='primary' onPress={() => navigation.navigate('Sign Up')} style={styles.margin}>
+                        Sign Up
+                    </Button>
+                </Layout>
+            </KeyboardAvoidingView>
         </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
-    textInput: {
-        padding: 7.5,
-        marginHorizontal: 5,
-        marginVertical: 20,
-        borderBottomWidth: 2,
-        borderColor: 'darkgrey',
+    margin: {
+        marginVertical: 5
     }
 });
 
