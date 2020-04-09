@@ -6,15 +6,20 @@ import { useDispatch } from 'react-redux';
 import firebase from 'firebase/app';
 import 'firebase/database';
 import BusyFriendModal from './modals/BusyFriendModal';
+import FriendInfoModal from './modals/FriendInfoModal';
 
 function FriendCard({ userInfo }) {
-    const [modalVisible, setModalVisible] = useState(false);
+    const [busyModalVisible, setBusyModal] = useState(false);
+    const [infoModalVisible, setInfoModal] = useState(false);
     const { name, status } = userInfo;
     const phone = userInfo.phone;
     const dispatch = useDispatch();
 
-    const showModal = () => setModalVisible(true);
-    const hideModal = () => setModalVisible(false);
+    const showBusyModal = () => setBusyModal(true);
+    const hideBusyModal = () => setBusyModal(false);
+
+    const showInfoModal = () => setInfoModal(true);
+    const hideInfoModal = () => setInfoModal(false);
 
     useEffect(() => {
         let friendListener = firebase.database().ref(phone + '/profile').on('value', snapshot => {
@@ -44,24 +49,26 @@ function FriendCard({ userInfo }) {
             )
         }
 
-        // Todo: Open Modal asking if you're sure you want to call them
         return (
-            <Button status='warning' onPress={showModal} style={styles.button}>
+            <Button status='warning' onPress={showBusyModal} style={styles.button}>
                 Busy
             </Button>
         )
     }
 
     return (
-        <View style={styles.container}>
-            <View style={styles.left}>
-                <Text style={styles.contact}>{name}</Text>
+        <TouchableOpacity onPress={showInfoModal}>
+            <View style={styles.container}>
+                <View style={styles.left}>
+                    <Text style={styles.contact}>{name}</Text>
+                </View>
+                <Layout style={styles.right}>
+                    {renderButton()}
+                    <BusyFriendModal visible={busyModalVisible} hideModal={hideBusyModal} name={name} phone={phone}/>
+                </Layout>
             </View>
-            <Layout style={styles.right}>
-                {renderButton()}
-                <BusyFriendModal visible={modalVisible} hideModal={hideModal} name={name} phone={phone}/>
-            </Layout>
-        </View>
+            <FriendInfoModal visible={infoModalVisible} hideModal={hideInfoModal} name={name} phone={phone} status={status}/>
+        </TouchableOpacity>
     )
 }
 
