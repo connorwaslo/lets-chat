@@ -8,8 +8,8 @@ import { useDispatch } from 'react-redux';
 import { setPhone } from '../../redux/actions/actions';
 
 function LogIn({ navigation }) {
-    const [email, setEmail] = useState('connorwaslo29@gmail.com');
-    const [pass, setPass] = useState('password');
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
     const dispatch = useDispatch();
 
     function handleLogIn() {
