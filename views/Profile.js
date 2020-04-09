@@ -1,6 +1,6 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Button } from 'galio-framework';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { Text, Button, Layout } from '@ui-kitten/components';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetApp, setStatus } from '../redux/actions/actions';
 import DrawerHeader from '../components/DrawerHeader';
@@ -9,6 +9,7 @@ import 'firebase/database';
 import 'firebase/auth';
 
 function Profile({ navigation }) {
+    const [buttonStatus, setButtonStatus] = useState('');
     const { name, phone, status } = useSelector(state => ({
         name: state.name,
         phone: state.phone,
@@ -16,7 +17,12 @@ function Profile({ navigation }) {
     }));
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        setButtonStatus(status);
+    }, []);
+
     function setUserStatus(newStatus) {
+        setButtonStatus(newStatus);
         if (newStatus !== status) {
             dispatch(setStatus(newStatus));
             // Todo: set status in firebase
@@ -44,32 +50,38 @@ function Profile({ navigation }) {
 
     return (
         <DrawerHeader navigation={navigation} title={name}>
-            <Text style={styles.header}>Phone Number</Text>
-            <Text style={styles.text}>{phone}</Text>
+            <Layout style={{ flex: 1, padding: 15 }}>
+                <View style={{ marginBottom: 15 }}>
+                    <Text category='h3' style={styles.text}>Phone Number</Text>
+                    <Text category='s1' style={styles.text}>{phone}</Text>
+                </View>
 
-            <Text style={styles.header}>Status</Text>
-            <Text style={styles.text}>{status.toUpperCase()}</Text>
+                <View style={{ marginBottom: 15 }}>
+                    <Text category='h3' style={styles.text}>Status</Text>
+                    <Text category='s1' style={styles.text}>{status.toUpperCase()}</Text>
+                </View>
 
-            <View style={{ flex: 1, alignItems: 'center' }}>
-                <Button
-                    round uppercase color={status === 'ready' ? 'success' : '#BDBDBD'}
-                    shadowless
-                    onPress={() => setUserStatus('ready')}
-                    style={styles.statusButton}>Ready</Button>
-                <Button
-                    round uppercase color={status === 'busy' ? 'warning' : '#BDBDBD'}
-                    shadowless
-                    onPress={() => setUserStatus('busy')}
-                    style={styles.statusButton}>Busy</Button>
-            </View>
-            <View style={{ justifyContent: 'flex-end', alignItems: 'center' }}>
-                <Button
-                    round uppercase color='error' shadowless
-                    onPress={handleSignout}
-                >
-                    Sign Out
-                </Button>
-            </View>
+                <View style={{ flex: 5, alignItems: 'center' }}>
+                    <Button
+                        status={buttonStatus === 'ready' ? 'success' : 'basic'}
+                        onPress={() => setUserStatus('ready')}
+                        style={styles.button}>Ready</Button>
+                    <Button
+                        status={buttonStatus === 'busy' ? 'warning' : 'basic'}
+                        shadowless
+                        onPress={() => setUserStatus('busy')}
+                        style={styles.button}>Busy</Button>
+                </View>
+                <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
+                    <Button
+                        status='danger'
+                        onPress={handleSignout}
+                        style={styles.button}
+                    >
+                        Sign Out
+                    </Button>
+                </View>
+            </Layout>
         </DrawerHeader>
     )
 }
@@ -82,11 +94,11 @@ const styles = StyleSheet.create({
     },
     text: {
         textAlign: 'center',
-        marginTop: 10,
-        marginBottom: 30
+        marginTop: 5
     },
-    statusButton: {
-        margin: 10
+    button: {
+        margin: 10,
+        width: '100%'
     }
 });
 
