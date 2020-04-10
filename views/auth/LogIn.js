@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, SafeAreaView, StyleSheet, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { SafeAreaView, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { Layout, Input, Button, Text } from '@ui-kitten/components';
 import firebase from 'firebase/app';
 import 'firebase/database';
@@ -8,8 +8,8 @@ import { useDispatch } from 'react-redux';
 import { setPhone } from '../../redux/actions/actions';
 
 function LogIn({ navigation }) {
-    const [email, setEmail] = useState('connorwaslo29@gmail.com');
-    const [pass, setPass] = useState('password');
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
     const dispatch = useDispatch();
 
     function handleLogIn() {
