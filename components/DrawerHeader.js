@@ -1,7 +1,6 @@
 import React from 'react';
 import { SafeAreaView, View, TouchableOpacity } from 'react-native';
-import { Text } from '@ui-kitten/components';
-import { Ionicons } from '@expo/vector-icons';
+import { Text, Icon } from '@ui-kitten/components';
 
 function DrawerHeader({ navigation, title, children }) {
     return (
@@ -13,7 +12,7 @@ function DrawerHeader({ navigation, title, children }) {
             </View>
             <View style={{ position: 'absolute', left: 15, top: 45 }}>
                 <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                    <Ionicons name='ios-menu' size={48} color='black'/>
+                    <Icon name='menu-outline' style={{ width: 48, height: 48 }} fill='black'/>
                 </TouchableOpacity>
             </View>
             <View style={{ flex: 1, marginTop: 50 }}>

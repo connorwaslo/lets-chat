@@ -6,12 +6,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { navigationRef } from './utils/RootNavigation';
+import { Icon } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
 import FriendRequests from './views/FriendRequests';
 import SignUp from './views/auth/SignUp';
 import LogIn from './views/auth/LogIn';
 import Status from './views/auth/Status';
-import { Ionicons } from '@expo/vector-icons';
+// import { Ionicons } from '@expo/vector-icons';
 import Profile from './views/Profile';
 
 function AppContainer() {
@@ -38,19 +39,27 @@ function AppContainer() {
                 <Drawer.Screen
                     name='Friends'
                     component={Friends}
-                    options={{ drawerIcon: ({ focused, color, size }) => <Ionicons color={color} size={size} name='ios-videocam'/>}}/>
+                    options={{ drawerIcon: ({ focused, color, size }) => (
+                            <Icon fill={color} style={{ width: size, height: size }} pack='eva' name='video-outline'/>
+                        )}}/>
                 <Drawer.Screen
                     name='Invite Friends'
                     component={InviteContacts}
-                    options={{ drawerIcon: ({ focused, color, size }) => <Ionicons color={color} size={size} name='ios-person-add'/>}}/>
+                    options={{ drawerIcon: ({ focused, color, size }) => (
+                            <Icon fill={color} style={{ width: size, height: size }} name='person-add-outline'/>
+                        )}}/>
                 <Drawer.Screen
                     name='Friend Requests'
                     component={FriendRequests}
-                    options={{ drawerIcon: ({ focused, color, size }) => <Ionicons color={color} size={size} name='ios-paper-plane'/>}}/>
+                    options={{ drawerIcon: ({ focused, color, size }) => (
+                            <Icon fill={color} style={{ width: size, height: size }} name='email-outline'/>
+                        )}}/>
                 <Drawer.Screen
                     name='Profile'
                     component={Profile}
-                    options={{ drawerIcon: ({ focused, color, size }) => <Ionicons color={color} size={size} name='ios-contact'/>}}/>
+                    options={{ drawerIcon: ({ focused, color, size }) => (
+                            <Icon fill={color} style={{ width: size, height: size }} name='person-outline'/>
+                        )}}/>
             </Drawer.Navigator>
         )
     }
